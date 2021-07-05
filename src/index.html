@@ -1,1 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Incidentes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <style>
+
+    body {
+      width: 800px;
+      margin: auto;
+    }
+
+    .container {
+      /* margin-top: 10px; */
+      position: relative;
+    }
+
+    #boton-flotante {
+      margin-right: 0;
+      margin-bottom: 0;
+      position: sticky;
+      z-index: 999;
+      top: 0;
+    }
+
+    .btn {
+      margin: 20px auto;
+      display: block;
+    }
+
+    .card {
+      margin-top: 20px;
+    }
+
+    .card img {
+      margin-bottom: 20px;
+    }
+
+    .modal-header {
+      flex-direction: column;
+    }
+
+    .card-title {
+      margin-bottom: 30px;
+      color: #0d6efd;
+    }
+
+    .modal-header button {
+      position: absolute;
+      right: 20px;
+    }
+
+    .row img {
+      width: 150px;
+    }
+
+    .row div {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-around;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  
+  <div class="container">
+    <button class="btn btn-success" id="boton-flotante">Ver Estado</button>
+    
+    <section>
+
+      <div id="logos" class="row">
+        <div class="col-6">
+          <img src="./assets/Suterh.png" alt="">
+        </div>
+        <div class="col-6">
+          <img src="./assets/Osperyh.png" alt="">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <img src="./assets/Osperyhra.png" alt="">
+        </div>
+        <div class="col-6">
+          <img src="./assets/Fateryh.png" alt="">
+        </div>
+      </div>
+
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">SRE::Reporte de incidente</h5>
+          <p class="card-text">El nombre y la foto asociados a tu cuenta de Google se
+            registrarán cuando subas archivos y envíes este formulario
+            Los archivos que se suban se compartirán fuera de la organización a la que
+            pertenecen.</p>
+
+          <p>¿No es tuya la dirección zucconi.g@edificarseguros.com.ar?</p>
+
+          <button class="btn btn-primary">Cambiar de cuenta</button>
+
+          <p class="text-danger">*Obligatorio</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Control rápido de soluciones intentadas</h5>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
+            <label class="form-check-label" for="flexCheck1">
+              Borrar cache del navegador
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck2">
+            <label class="form-check-label" for="flexCheck2">
+              Reintentar la acción
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck3">
+            <label class="form-check-label" for="flexCheck3">
+              Salir y volver a entrar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck4">
+            <label class="form-check-label" for="flexCheck4">
+              Verificar si hay red disponible
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheck5">
+            <label class="form-check-label" for="flexCheck5">
+              Es un reporte masivo / general
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Usuario y sector o delegación (edificio) donde se produjo el
+            incidente: <span class="text-danger">*</span></h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Hora del incidente (lo mas exacta posible)<span class="text-danger"> *</span>
+          </h5>
+
+          <label for="basic-url" class="form-label">Hora</label>
+          <div class="input-group mb-3">
+            <input type="time" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Sistema en el que se presenta el problema</h5>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem1">
+            <label class="form-check-label" for="sistem1">
+              octubre.osperyh.org.ar
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem2">
+            <label class="form-check-label" for="sistem2">
+              octubre.osperyhra.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem3">
+            <label class="form-check-label" for="sistem3">
+              cajas2.octubre.osperyh.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem4">
+            <label class="form-check-label" for="sistem4">
+              issa.edificarseguros.com.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem5">
+            <label class="form-check-label" for="sistem5">
+              miseguro.edificarseguros.com.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem6">
+            <label class="form-check-label" for="sistem6">
+              miobra.osperyh.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem7">
+            <label class="form-check-label" for="sistem7">
+              guau.umet.edu.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem8">
+            <label class="form-check-label" for="sistem8">
+              miweb.umet.edu.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem9">
+            <label class="form-check-label" for="sistem9">
+              siga.octubre.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem10">
+            <label class="form-check-label" for="sistem10">
+              rrhh.octubre.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem11">
+            <label class="form-check-label" for="sistem11">
+              app.osperyhra.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem12">
+            <label class="form-check-label" for="sistem12">
+              app.edificarseguros.com.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem13">
+            <label class="form-check-label" for="sistem13">
+              intranet.seracarh.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem14">
+            <label class="form-check-label" for="sistem14">
+              arrabal.sportivobarracas.com.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem15">
+            <label class="form-check-label" for="sistem15">
+              eltrineo.suterh.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem16">
+            <label class="form-check-label" for="sistem16">
+              helios.osperyh.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem17">
+            <label class="form-check-label" for="sistem17">
+              wiki.octubre.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem18">
+            <label class="form-check-label" for="sistem18">
+              gitlab.octubre.org.ar
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="sistem19">
+            <label class="form-check-label" for="sistem19">
+              sentry.octubre.org.ar
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Nombre de pantalla o función que desea usar:<span class="text-danger"> *</span>
+          </h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Descripción de la acción que intenta realizar<span class="text-danger">
+              *</span></h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Descripción del error que recibe: (Si la pantalla permite copiar el texto del
+            error pegarlo aquí por favor)<span class="text-danger"> *</span></h5>
+
+          <img width="100%" src="./assets/Animation.gif" alt="">
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Captura de pantalla donde se visualicen los datos ingresados (justo antes de que se
+            genere el error)</h5>
+
+          <div class="mb-3">
+            <input class="form-control" type="file" id="formFile" multiple>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Requiere de esta función para atender a un afiliado / cliente?<span
+              class="text-danger">
+              *</span></h5>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Si
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">En caso de SI cuando debe entregarlo:</h5>
+
+          <label for="basic-url" class="form-label">Hora</label>
+          <div class="input-group mb-3">
+            <input type="time" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Nombre de la persona a la que le sucedió el incidente<span class="text-danger">
+              *</span></h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Teléfono o interno<span class="text-danger">
+              *</span></h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Team Viewer o Anydesk<span class="text-danger">
+              *</span></h5>
+
+          <div class="input-group mb-3">
+            <input type="text" placeholder="Tu respuesta" class="form-control" id="basic-url"
+              aria-describedby="basic-addon3">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+          <h5 class="card-title">Es una Pc interna<span class="text-danger">
+              *</span></h5>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Si
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <section>
+
+      <button type="button" class="btn btn-primary">Enviar</button>
+      
+    </section>
+
+
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

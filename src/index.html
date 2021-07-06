@@ -9,64 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-  <style>
-
-    body {
-      width: 800px;
-      margin: auto;
-    }
-
-    .container {
-      /* margin-top: 10px; */
-      position: relative;
-    }
-
-    #boton-flotante {
-      margin-right: 0;
-      margin-bottom: 0;
-      position: sticky;
-      z-index: 999;
-      top: 0;
-    }
-
-    .btn {
-      margin: 20px auto;
-      display: block;
-    }
-
-    .card {
-      margin-top: 20px;
-    }
-
-    .card img {
-      margin-bottom: 20px;
-    }
-
-    .modal-header {
-      flex-direction: column;
-    }
-
-    .card-title {
-      margin-bottom: 30px;
-      color: #0d6efd;
-    }
-
-    .modal-header button {
-      position: absolute;
-      right: 20px;
-    }
-
-    .row img {
-      width: 150px;
-    }
-
-    .row div {
-      display: flex;
-      flex-wrap: wrap;
-      align-content: space-around;
-      justify-content: center;
-    }
-  </style>
+  <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
@@ -75,9 +18,9 @@
   <div class="container">
     <button class="btn btn-success" id="boton-flotante">Ver Estado</button>
     
-    <section>
+    <section id="logos">
 
-      <div id="logos" class="row">
+      <div class="row">
         <div class="col-6">
           <img src="./assets/Suterh.png" alt="">
         </div>
@@ -467,7 +410,7 @@
 
     <section>
 
-      <button type="button" class="btn btn-primary">Enviar</button>
+      <button type="button" class="btn btn-primary send">Enviar</button>
       
     </section>
 

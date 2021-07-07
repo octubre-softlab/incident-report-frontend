@@ -48,7 +48,7 @@
           <h1 class="card-title">☎ Reporte de incidente</h1>
 
 
-          <div id="quickCheck" class="card">
+          <div id="quick-check" class="card">
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
@@ -114,9 +114,9 @@
                   class="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheck5"
+                  id="happensToManyUsers"
                 />
-                <label class="form-check-label" for="flexCheck5">
+                <label class="form-check-label" for="happensToManyUsers">
                   ¿Le sucede a mas de un usuario?
                 </label>
               </div>
@@ -125,9 +125,9 @@
                   class="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheck5"
+                  id="happensToManyLocations"
                 />
-                <label class="form-check-label" for="flexCheck5">
+                <label class="form-check-label" for="happensToManyLocations">
                   ¿Sucede en mas de una delegación o edificio?
                 </label>
               </div>
@@ -136,20 +136,30 @@
                   class="form-check-input"
                   type="checkbox"
                   value=""
-                  id="flexCheck55"
+                  id="insideCorporateNetwork"
                 />
-                <label class="form-check-label" for="flexCheck55">
+                <label class="form-check-label" for="insideCorporateNetwork">
                   ¿Es en un PC interna?
                 </label>
               </div>
               <br>
-              <label for="basic-url" class="form-label">Usuario/s y sector/es o delegación/es (edificio/s) donde se produjo el incidente</label>
+              <label for="users" class="form-label">Usuario/s donde se produjo el incidente</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="users"
+                  aria-describedby="basic-addon3"
+                />
+              </div>              
+              <label for="locations" class="form-label">Sector/es o delegación/es (edificio/s) donde se produjo el incidente</label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  placeholder="Tu respuesta"
+                  class="form-control"
+                  id="locations"
                   aria-describedby="basic-addon3"
                 />
               </div>
@@ -186,7 +196,7 @@
             </div>
           </div>
 
-          <div class="card">
+          <div id="incident-details" class="card">
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
@@ -253,7 +263,7 @@
             </div>
           </div>
 
-          <div id="system" class="card">
+          <div id="system-details" class="card">
             <div class="card-header bg-primary"></div>
             <div id="system-list" class="card-body">
               <h5 class="card-title">
@@ -263,7 +273,7 @@
             </div>
           </div>
 
-          <div id="check" class="card">
+          <div id="contact-details" class="card">
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">

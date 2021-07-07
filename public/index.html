@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reporte de Incidentes</title>
+    <title>Reporte de incidente</title>
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,7 +21,7 @@
 
   <body>
     <div class="container">
-      <button class="btn btn-success" id="boton-flotante">Ver Estado</button>
+      <button class=" btn btn-success" id="boton-flotante">Ver Estado</button>
 
       <section id="logos">
         <div class="row">
@@ -42,7 +43,7 @@
         </div>
       </section>
 
-      <form>
+      <form name="report" id="report" class="needs-validation" novalidate>
         <section>
           <br>
           <h1 class="card-title">☎ Reporte de incidente</h1>
@@ -61,6 +62,7 @@
                   type="checkbox"
                   value=""
                   id="flexCheck1"
+                  required
                 />
                 <label class="form-check-label" for="flexCheck1">
                   Borrar cache del navegador
@@ -73,6 +75,7 @@
                   type="checkbox"
                   value=""
                   id="flexCheck2"
+                  required
                 />
                 <label class="form-check-label" for="flexCheck2">
                   Reintentar la acción
@@ -84,6 +87,7 @@
                   type="checkbox"
                   value=""
                   id="flexCheck3"
+                  required
                 />
                 <label class="form-check-label" for="flexCheck3">
                   Salir y volver a entrar
@@ -95,6 +99,7 @@
                   type="checkbox"
                   value=""
                   id="flexCheck4"
+                  required
                 />
                 <label class="form-check-label" for="flexCheck4">
                   Verificar si hay red disponible
@@ -109,37 +114,51 @@
               <h5 class="card-title">
                 Detalles del usuario
               </h5>
+              <label class="form-check-label" for="happensToManyUsers">
+                ¿Le sucede a mas de un usuario?
+              </label>
               <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="happensToManyUsers"
-                />
-                <label class="form-check-label" for="happensToManyUsers">
-                  ¿Le sucede a mas de un usuario?
+                <input class="form-check-input" type="radio" name="happensToManyUsers" id="happensToManyUsers1" value="yes" required>
+                <label class="form-check-label" for="happensToManyUsers1">
+                  Si
                 </label>
               </div>
               <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="happensToManyLocations"
-                />
-                <label class="form-check-label" for="happensToManyLocations">
-                  ¿Sucede en mas de una delegación o edificio?
+                <input class="form-check-input" type="radio" name="happensToManyUsers" id="happensToManyUsers2" value="no" required>
+                <label class="form-check-label" for="happensToManyUsers2">
+                  No
+                </label>
+              </div>
+              <br>
+              <label class="form-check-label" for="happensToManyLocations">
+                ¿Sucede en mas de una delegación o edificio?
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="happensToManyLocations" id="happensToManyLocations1" value="yes" required>
+                <label class="form-check-label" for="happensToManyLocations1">
+                  Si
                 </label>
               </div>
               <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="insideCorporateNetwork"
-                />
-                <label class="form-check-label" for="insideCorporateNetwork">
-                  ¿Es en un PC interna?
+                <input class="form-check-input" type="radio" name="happensToManyLocations" id="happensToManyLocations2" value="no" required>
+                <label class="form-check-label" for="happensToManyLocations2">
+                  No
+                </label>
+              </div>
+              <br>
+              <label class="form-check-label" for="insideCorporateNetwork">
+                ¿Es en un PC interna?
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="insideCorporateNetwork" id="insideCorporateNetwork1" value="yes" required>
+                <label class="form-check-label" for="insideCorporateNetwork1">
+                  Si
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="insideCorporateNetwork" id="insideCorporateNetwork2" value="no" required>
+                <label class="form-check-label" for="insideCorporateNetwork2">
+                  No
                 </label>
               </div>
               <br>
@@ -151,6 +170,7 @@
                   class="form-control"
                   id="users"
                   aria-describedby="basic-addon3"
+                  required
                 />
               </div>              
               <label for="locations" class="form-label">Sector/es o delegación/es (edificio/s) donde se produjo el incidente</label>
@@ -161,6 +181,7 @@
                   class="form-control"
                   id="locations"
                   aria-describedby="basic-addon3"
+                  required
                 />
               </div>
             </div>
@@ -172,26 +193,33 @@
               <h5 class="card-title">
                 Urgencia
               </h5>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheck55"
-                />
-                <label class="form-check-label" for="flexCheck55">
-                  ¿Requiere de esta función para atender a un afiliado / cliente?
-                </label>
-              </div>
-              <br>
-              <label for="userFacing" class="form-label">En caso de SI cuando debe entregarlo</label>
+
+              
+              <label for="deadtime" class="form-label">¿Tiene un tiempo límite? En caso de tenerlo ¿cuándo debe entregarlo?</label>
               <div class="input-group mb-3">
                 <input
                   type="time"
                   class="form-control"
-                  id="userFacing"
+                  name="deadtime"
+                  id="deadtime"
                   aria-describedby="basic-addon3"
                 />
+              </div>
+              
+              <label class="form-check-label" for="userFacing">
+                ¿Requiere de esta función para atender a un afiliado / cliente?
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="userFacing" id="userFacing1" value="yes" required>
+                <label class="form-check-label" for="userFacing1">
+                  Si
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="userFacing" id="userFacing2" value="no" required>
+                <label class="form-check-label" for="userFacing2">
+                  No
+                </label>
               </div>
             </div>
           </div>
@@ -203,72 +231,136 @@
                 Incidente<span
                   class="text-danger"
                 >
-                  *</span
-                >
               </h5>
 
-              <label for="basic-url" class="form-label">Hora del incidente (lo mas exacta posible)</label>
+              <label for="functionName" class="form-label">Nombre de pantalla o función que desea usar</label>
               <div class="input-group mb-3">
                 <input
-                  type="time"
+                  placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="functionName"
+                  name="functionName"
                   aria-describedby="basic-addon3"
+                  required
                 />
               </div>
 
-              <label for="basic-url" class="form-label">Nombre de pantalla o función que desea usar</label>
+              <label for="actionDetails" class="form-label">¿Qué acción intentaba hacer?</label>
               <div class="input-group mb-3">
-                <input
+                <textarea
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="actionDetails"
+                  name="actionDetails"
                   aria-describedby="basic-addon3"
-                />
+                  required
+                ></textarea>
               </div>
 
-              <label for="basic-url" class="form-label">¿Qué acción intentaba hacer y cuál es el comportamiento esperado?</label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="basic-url"
-                  aria-describedby="basic-addon3"
-                />
-              </div>
-
-              <label for="basic-url" class="form-label">Captura de pantalla donde se visualicen los datos ingresados
+              <label for="files" class="form-label">Captura/s de pantalla completa donde se visualicen los datos ingresados
                 (justo antes de que se genere el error)</label>
               <div class="mb-3">
                 <input
                   class="form-control"
                   type="file"
-                  id="formFile"
+                  id="files"
                   multiple
+                  required
                 />
               </div>
 
-
-              <label for="basic-url" class="form-label">Descripción del error que recibe: (Si la pantalla permite copiar
-                el texto del error pegarlo aquí por favor)</label>
-              <img width="100%" src="./assets/Animation.gif" alt="" />
-
+              <label for="incidentTime" class="form-label">Hora del incidente (lo mas exacta posible)</label>
               <div class="input-group mb-3">
-                <textarea class="form-control" rows="3" placeholder="Tu respuesta" required></textarea>
+                <input
+                  type="time"
+                  class="form-control"
+                  id="incidentTime"
+                  name="incidentTime"
+                  aria-describedby="basic-addon3"
+                  required
+                />
+              </div>
+
+              <label class="form-check-label" for="incidentType">
+                Tipo de incidente
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="incidentType" id="incidentType1" value="degradation" required>
+                <label class="form-check-label" for="incidentType1">
+                  Degradación (Lentitud)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="incidentType" id="incidentType2" value="error" required>
+                <label class="form-check-label" for="incidentType2">
+                  Error o compartamiento inesperado
+                </label>
+              </div>
+              <br>
+              
+              <div class="error-fields">
+                <label for="expectedBehavior" class="form-label">¿Cuál es el comportamiento esperado</label>
+                <div class="input-group mb-3">
+                  <textarea
+                    type="text"
+                    placeholder="Tu respuesta"
+                    class="form-control"
+                    id="expectedBehavior"
+                    name="expectedBehavior"
+                    aria-describedby="basic-addon3"
+                    required
+                  ></textarea>
+                </div>
+
+                <label for="errorDetails" class="form-label">Descripción del error que recibe: (Si la pantalla permite copiar
+                  el texto del error pegarlo aquí por favor)</label>
+                <img width="100%" src="./assets/Animation.gif" alt="" />
+
+                <div class="input-group mb-3">
+                  <textarea id="errorDetails" name="errorDetails" class="form-control" rows="3" placeholder="Tu respuesta" required></textarea>
+                </div>
+
               </div>
               
-              
+              <div class="degradation-fields">
+                <label for="expectedTime" class="form-label">¿Cuánto tiempo debería tardar normalmente esta acción?</label>
+                <div class="input-group mb-3">
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="expectedTime"
+                    name="expectedTime"
+                    aria-describedby="basic-addon3"
+                    required
+                  />
+                </div>
+
+                <label for="currentTime" class="form-label">¿Cuánto tiempo esta tardando?</label>
+                <div class="input-group mb-3">
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="currentTime"
+                    name="currentTime"
+                    aria-describedby="basic-addon3"
+                    required
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           <div id="system-details" class="card">
             <div class="card-header bg-primary"></div>
-            <div id="system-list" class="card-body">
+            <div class="card-body">
               <h5 class="card-title">
-                Sistema en el que se presenta el problema
+                ¿En qué sistema/s se presenta el problema?
               </h5>
+
+              <div id="system-list"  class="checkbox-group">
+
+              </div>
 
             </div>
           </div>
@@ -277,41 +369,39 @@
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
-                ¿Con quién se puede probar?<span
-                  class="text-danger"
-                >
-                  *</span
-                >
+                ¿Con quién se puede probar?
               </h5>
-              <label for="basic-url" class="form-label">(Puede ser un miembro del equipo de soporte o usuario final)</label>
+              <label class="form-label">(Puede ser un miembro del equipo de soporte o usuario final)</label>
               <br>              
-              <label for="basic-url" class="form-label">Nombre</label>
+              <label for="contactName" class="form-label">Nombre</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="contactName"
                   aria-describedby="basic-addon3"
+                  required
                 />
               </div>
-              <label for="basic-url" class="form-label">Teléfono o interno</label>
+              <label for="contactPhone" class="form-label">Teléfono o interno</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="contactPhone"
                   aria-describedby="basic-addon3"
+                  required
                 />
               </div>
-              <label for="basic-url" class="form-label">Team Viewer o Anydesk</label>
+              <label for="contactRemoteSupportDetails" class="form-label">Team Viewer o Anydesk</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="basic-url"
+                  id="contactRemoteSupportDetails"
                   aria-describedby="basic-addon3"
                 />
               </div>
@@ -340,77 +430,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script>
-      var systems = [
-      'octubre.osperyh.org.ar', 
-      'octubre.osperyhra.org.ar',
-      'cajas2.octubre.osperyh.org.ar',
-      'issa.edificarseguros.com.ar',
-      'miseguro.edificarseguros.com.ar',
-      'miobra.osperyh.org.ar',
-      'guau.umet.edu.ar',
-      'miweb.umet.edu.ar',
-      'siga.octubre.org.ar',
-      'rrhh.octubre.org.ar',
-      'app.osperyhra.org.ar',
-      'app.edificarseguros.com.ar',
-      'intranet.seracarh.org.ar',
-      'arrabal.sportivobarracas.com.ar',
-      'eltrineo.suterh.org.ar',
-      'helios.osperyh.org.ar',
-      'wiki.octubre.org.ar',
-      'gitlab.octubre.org.ar',
-      'sentry.octubre.org.ar',
-      'octubre.osperyh.org.ar',
-      'octubre.osperyhra.org.ar'
-      ];
-
-      $(document).ready(function () {
-        systems.forEach((value, index) => {
-          var systemId = `system_${value.replaceAll(".", "_")}`;
-
-          $("#system-list").append(`
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="${systemId}"
-              />
-              <label class="form-check-label" for="${systemId}">
-                ${value}
-              </label>
-            </div>
-            `);
-        });
-      });
-
-      // Attach an event for when the user submits the form
-      $("form").on("submit", function (event) {
-        // Prevent the page from reloading
-        event.preventDefault();
-
-        var selectedSystems = $("#system-list input[id^=system_]:checked");
-        /*
-        {
-          "browserCacheCleared":true,
-          "actionRetried":true,
-          "massiveIncident":true,
-          "reloaed":true,
-          "userData":"apellido.s",
-          "dateTime":3213123,
-          "app":"octubre",
-          "functionData":"Historia Clinica",
-          "actionDetails":"Imprimir",
-          "errorDetails":"dasdasdsadasd",
-          "userFacing":true,
-          "deadtime":2312321,
-          "contactDetails":"321321312",
-          "corporateNetwork":true,
-          "reportedBy":"Rodrigo2"
-      }*/
-
-        console.log("Formulario enviado", selectedSystems);
-      });
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>

@@ -7,6 +7,15 @@ body {
       color: gray;
   }
 
+  .error-fields {
+    display: none;
+  }
+
+
+  .degradation-fields {
+    display: none;
+  }
+
   .container {
     /* margin-top: 10px; */
     position: relative;

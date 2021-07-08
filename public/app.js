@@ -23,23 +23,26 @@ var systems = [
     
 
 $(document).ready(function () {
-    systems.forEach((value, index) => {
-    var systemId = `system_${value.replaceAll(".", "_")}`;
 
-    $("#system-list").append(`
-        <div class="form-check form-checkbox">
-        <input
-            class="form-check-input"
-            type="checkbox"
-            id="${systemId}"
-            name="${systemId}"
-            required
-        />
-        <label class="form-check-label" for="${systemId}">
-            ${value}
-        </label>
-        </div>
-        `);
+    
+
+    systems.forEach((value, index) => {
+        var systemId = `system_${value.replaceAll(".", "_")}`;
+
+        $("#system-list").append(`
+            <div class="form-check form-checkbox">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="${systemId}"
+                name="${systemId}"
+                required
+            />
+            <label class="form-check-label" for="${systemId}">
+                ${value}
+            </label>
+            </div>
+            `);
     });
 });
 
@@ -48,11 +51,28 @@ var form = $('#report')[0];
 
 form.addEventListener('submit', (event) => {
     if (!form.checkValidity()) {
+        console.log("invalido");
         event.preventDefault();
         event.stopPropagation();
     }
+    else {
+        var serialized = $('form').serializeArray();
+        var data = {
+            systems: []
+        };
+        for(var i in serialized){
+            if(serialized[i]['name'].startsWith('system_') && serialized[i]['value'] === 'on') {
+                data.systems.push(serialized[i]['name'].replace('system_','').replaceAll('_','.'))
+            }
+            else {
+                data[serialized[i]['name']] = serialized[i]['value']
+            }
+        }
+        console.log("Formulario enviado", JSON.stringify(data));
+        alert("Incidente reportado. Muchas gracias")
+    }
     form.classList.add('was-validated');
-    }, false);
+}, false);
 
 $('#system-list').on('change', 'input[type="checkbox"]', function (e) {
     
@@ -63,39 +83,32 @@ $('#system-list').on('change', 'input[type="checkbox"]', function (e) {
 });
 
 $('input[name="incidentType"]').click(function () {
+    
     if ($(this).attr('value') == 'degradation') {
         $(".degradation-fields").show('slow');
         $(".error-fields").hide('slow');
+        $(".degradation-fields textarea,input").attr('required', true);
+        $(".error-fields textarea,input").attr('required', false);
     }
     if ($(this).attr('value') == 'error') {
         $(".error-fields").show('slow');
         $(".degradation-fields").hide('slow');
+        $(".degradation-fields textarea,input").attr('required', false);
+        $(".error-fields textarea,input").attr('required', true);
 
     }
 });
 
 // Attach an event for when the user submits the form
 
-$('form').on('submit', function (event) {
+// $('form').on('submit', function (event) {
 
-    // Prevent the page from reloading
-    event.preventDefault();
+//     // Prevent the page from reloading
+//     event.preventDefault();
 
-    // var selectedSystems = $('#system-list input[id^=system_]:checked');
+//     // var selectedSystems = $('#system-list input[id^=system_]:checked');
     
-    var serialized = $('form').serializeArray();
-    var data = {
-        systems: []
-    };
-    for(var i in serialized){
-        if(serialized[i]['name'].startsWith('system_') && serialized[i]['value'] === 'on') {
-            data.systems.push(serialized[i]['name'].replace('system_','').replaceAll('_','.'))
-        }
-        else {
-            data[serialized[i]['name']] = serialized[i]['value']
-        }
-    }
-    console.log("Formulario enviado", JSON.stringify(data));
-});
+    
+// });
 
 

@@ -49,6 +49,26 @@
           <h1 class="card-title">☎ Reporte de incidente</h1>
 
 
+          <div id="reporter-details" class="card">
+            <div class="card-header bg-primary"></div>
+            <div class="card-body">
+              <h5 class="card-title">
+                ¿Quién reporta?
+              </h5>
+
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  placeholder="Tu nombre"
+                  class="form-control"
+                  id="reportedBy"
+                  name="reportedBy"
+                  aria-describedby="basic-addon3"
+                  required
+                />
+              </div>
+          </div>
+
           <div id="quick-check" class="card">
             <div class="card-header bg-primary"></div>
             <div class="card-body">
@@ -114,72 +134,90 @@
               <h5 class="card-title">
                 Detalles del usuario
               </h5>
-              <label class="form-check-label" for="happensToManyUsers">
-                ¿Le sucede a mas de un usuario?
+              <label class="form-check-label" for="affectedUsersCount">
+                ¿Cuántos usuarios pudo verificar que tienen este problema?
               </label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="happensToManyUsers" id="happensToManyUsers1" value="yes" required>
-                <label class="form-check-label" for="happensToManyUsers1">
-                  Si
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="happensToManyUsers" id="happensToManyUsers2" value="no" required>
-                <label class="form-check-label" for="happensToManyUsers2">
-                  No
-                </label>
-              </div>
-              <br>
-              <label class="form-check-label" for="happensToManyLocations">
-                ¿Sucede en mas de una delegación o edificio?
-              </label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="happensToManyLocations" id="happensToManyLocations1" value="yes" required>
-                <label class="form-check-label" for="happensToManyLocations1">
-                  Si
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="happensToManyLocations" id="happensToManyLocations2" value="no" required>
-                <label class="form-check-label" for="happensToManyLocations2">
-                  No
-                </label>
-              </div>
-              <br>
-              <label class="form-check-label" for="insideCorporateNetwork">
-                ¿Es en un PC interna?
-              </label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="insideCorporateNetwork" id="insideCorporateNetwork1" value="yes" required>
-                <label class="form-check-label" for="insideCorporateNetwork1">
-                  Si
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="insideCorporateNetwork" id="insideCorporateNetwork2" value="no" required>
-                <label class="form-check-label" for="insideCorporateNetwork2">
-                  No
-                </label>
-              </div>
-              <br>
-              <label for="users" class="form-label">Usuario/s donde se produjo el incidente</label>
               <div class="input-group mb-3">
                 <input
-                  type="text"
-                  placeholder="Tu respuesta"
+                  type="number"
                   class="form-control"
-                  id="users"
+                  id="affectedUsersCount"
+                  name="affectedUsersCount"
                   aria-describedby="basic-addon3"
                   required
                 />
-              </div>              
-              <label for="locations" class="form-label">Sector/es o delegación/es (edificio/s) donde se produjo el incidente</label>
+              </div>
+              <label class="form-check-label" for="affectsManyLocations">
+                ¿Sucede en mas de una delegación o edificio?
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="affectsManyLocations" id="affectsManyLocations1" value="yes" required>
+                <label class="form-check-label" for="affectsManyLocations1">
+                  Si
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="affectsManyLocations" id="affectsManyLocations2" value="no" required>
+                <label class="form-check-label" for="affectsManyLocations2">
+                  No
+                </label>
+              </div>
+              <br>
+              <label class="form-check-label" for="network">
+                ¿Los usuarios afectados usan una PC interna?
+              </label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="network" id="network1" value="intranet" required>
+                <label class="form-check-label" for="network1">
+                  Si
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="network" id="network2" value="internet" required>
+                <label class="form-check-label" for="network2">
+                  No
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="network" id="network3" value="any" required>
+                <label class="form-check-label" for="network3">
+                  Sucede tanto en PC interna como en externa
+                </label>
+              </div>
+              <br>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="isMajorOutage"
+                  name="isMajorOutage"
+                />
+                <label class="form-check-label" for="isMajorOutage">
+                  ¿Probablemente sea un incidente masivo?
+                </label>
+              </div>
+              <br>
+              <label for="affectedUsers" class="form-label">Usuario/s afectados</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="locations"
+                  id="affectedUsers"
+                  name="affectedUsers"
+                  aria-describedby="basic-addon3"
+                  required
+                />
+              </div>
+              <label for="affectedLocations" class="form-label">Sector/es y delegación/es (edificio/s) afectado/s</label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  placeholder="Tu respuesta"
+                  class="form-control"
+                  id="affectedLocations"
+                  name="affectedLocations"
                   aria-describedby="basic-addon3"
                   required
                 />
@@ -206,18 +244,18 @@
                 />
               </div>
               
-              <label class="form-check-label" for="userFacing">
+              <label class="form-check-label" for="clientFacing">
                 ¿Requiere de esta función para atender a un afiliado / cliente?
               </label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="userFacing" id="userFacing1" value="yes" required>
-                <label class="form-check-label" for="userFacing1">
+                <input class="form-check-input" type="radio" name="clientFacing" id="clientFacing1" value="yes" required>
+                <label class="form-check-label" for="clientFacing1">
                   Si
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="userFacing" id="userFacing2" value="no" required>
-                <label class="form-check-label" for="userFacing2">
+                <input class="form-check-input" type="radio" name="clientFacing" id="clientFacing2" value="no" required>
+                <label class="form-check-label" for="clientFacing2">
                   No
                 </label>
               </div>
@@ -265,6 +303,7 @@
                   class="form-control"
                   type="file"
                   id="files"
+                  name="files"
                   multiple
                   required
                 />
@@ -324,25 +363,25 @@
               </div>
               
               <div class="degradation-fields">
-                <label for="expectedTime" class="form-label">¿Cuánto tiempo debería tardar normalmente esta acción?</label>
+                <label for="expectedTiming" class="form-label">¿Cuánto tiempo (en minutos y segundos) debería tardar normalmente esta acción?</label>
                 <div class="input-group mb-3">
                   <input
                     type="time"
                     class="form-control"
-                    id="expectedTime"
-                    name="expectedTime"
+                    id="expectedTiming"
+                    name="expectedTiming"
                     aria-describedby="basic-addon3"
                     required
                   />
                 </div>
 
-                <label for="currentTime" class="form-label">¿Cuánto tiempo esta tardando?</label>
+                <label for="actualTiming" class="form-label">¿Cuánto tiempo (en minutos y segundos) esta tardando?</label>
                 <div class="input-group mb-3">
                   <input
                     type="time"
                     class="form-control"
-                    id="currentTime"
-                    name="currentTime"
+                    id="actualTiming"
+                    name="actualTiming"
                     aria-describedby="basic-addon3"
                     required
                   />
@@ -380,6 +419,7 @@
                   placeholder="Tu respuesta"
                   class="form-control"
                   id="contactName"
+                  name="contactName"
                   aria-describedby="basic-addon3"
                   required
                 />
@@ -391,6 +431,7 @@
                   placeholder="Tu respuesta"
                   class="form-control"
                   id="contactPhone"
+                  name="contactPhone"
                   aria-describedby="basic-addon3"
                   required
                 />
@@ -402,6 +443,7 @@
                   placeholder="Tu respuesta"
                   class="form-control"
                   id="contactRemoteSupportDetails"
+                  name="contactRemoteSupportDetails"
                   aria-describedby="basic-addon3"
                 />
               </div>

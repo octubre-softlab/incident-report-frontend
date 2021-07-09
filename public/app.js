@@ -1,4 +1,4 @@
-var systems = [
+const systems = [
     'octubre.osperyh.org.ar', 
     'octubre.osperyhra.org.ar',
     'cajas2.octubre.osperyh.org.ar',
@@ -18,7 +18,7 @@ var systems = [
     'wiki.octubre.org.ar',
     'gitlab.octubre.org.ar',
     'sentry.octubre.org.ar'
-    ];
+];
 
     
 
@@ -42,7 +42,7 @@ $(document).ready(function () {
                 ${value}
             </label>
             </div>
-            `);
+        `);
     });
 });
 
@@ -50,26 +50,47 @@ $(document).ready(function () {
 var form = $('#report')[0];
 
 form.addEventListener('submit', (event) => {
+debugger;
+    event.preventDefault();
+    event.stopPropagation();
+
     if (!form.checkValidity()) {
-        console.log("invalido");
-        event.preventDefault();
-        event.stopPropagation();
+        alert('Debe completar todos los campos requeridos');
     }
     else {
+        
         var serialized = $('form').serializeArray();
+        console.log("fields", serialized);
         var data = {
             systems: []
         };
         for(var i in serialized){
             if(serialized[i]['name'].startsWith('system_') && serialized[i]['value'] === 'on') {
-                data.systems.push(serialized[i]['name'].replace('system_','').replaceAll('_','.'))
+                data.systems.push(serialized[i]['name'].replace('system_','').replaceAll('_','.'));
             }
             else {
                 data[serialized[i]['name']] = serialized[i]['value']
             }
         }
         console.log("Formulario enviado", JSON.stringify(data));
-        alert("Incidente reportado. Muchas gracias")
+
+        $.ajax({
+            type: "POST",
+            url: "https://noisy-credit-2002.oct-softlab.workers.dev",
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                alert("Incidente reportado. Muchas gracias");
+            },
+            error: function(errMsg) {
+                alert(errMsg);
+            }
+        });
+
+
+        
     }
     form.classList.add('was-validated');
 }, false);

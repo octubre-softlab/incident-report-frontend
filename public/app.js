@@ -50,7 +50,6 @@ $(document).ready(function () {
 var form = $('#report')[0];
 
 form.addEventListener('submit', (event) => {
-debugger;
     event.preventDefault();
     event.stopPropagation();
 
@@ -116,6 +115,17 @@ $('input[name="incidentType"]').click(function () {
         $(".degradation-fields").hide('slow');
         $(".degradation-fields textarea,input").attr('required', false);
         $(".error-fields textarea,input").attr('required', true);
+
+    }
+});
+
+$('input[name="clientFacing"]').click(function () {
+    
+    if ($(this).attr('value') == 'yes') {
+        $(".deadtime").hide('slow');
+    }
+    if ($(this).attr('value') == 'no') {
+        $(".deadtime").show('slow');
 
     }
 });

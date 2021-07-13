@@ -7,6 +7,10 @@ body {
       color: gray;
   }
 
+  .deadtime {
+    display: none;
+  }
+
   .error-fields {
     display: none;
   }

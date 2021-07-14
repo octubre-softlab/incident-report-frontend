@@ -17,7 +17,8 @@ const systems = [
     'helios.osperyh.org.ar',
     'wiki.octubre.org.ar',
     'gitlab.octubre.org.ar',
-    'sentry.octubre.org.ar'
+    'sentry.octubre.org.ar',
+    'example.com'
 ];
 
     

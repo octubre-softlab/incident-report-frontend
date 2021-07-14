@@ -33,6 +33,13 @@ body {
     top: 0;
   }
 
+  #boton-flotante a {
+    cursor: default;
+        pointer-events: none;        
+        text-decoration: none;
+        color: white;
+  }
+
   .btn {
     margin: 20px auto;
     display: block;

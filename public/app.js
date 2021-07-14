@@ -56,6 +56,7 @@ form.addEventListener('submit', (event) => {
 
     if (!form.checkValidity()) {
         alert('Debe completar todos los campos requeridos');
+        form.classList.add('was-validated');
     }
     else {
         
@@ -72,8 +73,6 @@ form.addEventListener('submit', (event) => {
                 data[serialized[i]['name']] = serialized[i]['value']
             }
         }
-        console.log("Formulario enviado", JSON.stringify(data));
-
         $.ajax({
             type: "POST",
             url: "https://noisy-credit-2002.oct-softlab.workers.dev",
@@ -88,13 +87,11 @@ form.addEventListener('submit', (event) => {
             error: function(err) {                
                 alert("El incidente no pudo ser reportado");
                 console.error(err);
+                form.classList.add('was-validated');
             }
         });
-
-
         
     }
-    form.classList.add('was-validated');
 }, false);
 
 $('#system-list').on('change', 'input[type="checkbox"]', function (e) {

@@ -132,7 +132,7 @@
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
-                Detalles del usuario
+                Detalle de usuarios afectados
               </h5>
               <label class="form-check-label" for="affectedUsersCount">
                 ¿Cuántos usuarios pudo verificar que tienen este problema?
@@ -267,12 +267,26 @@
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
-                Incidente<span
+                Detalles del incidente<span
                   class="text-danger"
                 >
               </h5>
+              <label class="form-label">(Tome un evento como muestra del incidente)</label>
+              <br><br>
 
-              <label for="functionName" class="form-label">Nombre de pantalla o función que desea usar</label>
+              <label for="eventUser" class="form-label">Username con que ocurrió este evento</label>
+              <div class="input-group mb-3">
+                <input
+                  placeholder="Tu respuesta"
+                  class="form-control"
+                  id="eventUser"
+                  name="eventUser"
+                  aria-describedby="basic-addon3"
+                  required
+                />
+              </div>
+
+              <label for="functionName" class="form-label">Nombre de pantalla o función</label>
               <div class="input-group mb-3">
                 <input
                   placeholder="Tu respuesta"
@@ -297,6 +311,8 @@
                 ></textarea>
               </div>
 
+              <label for="actionDetails" class="form-label">Por favor envie la captura por el chat</label>
+              <br><br>
               <!-- <label for="files" class="form-label">Captura/s de pantalla completa donde se visualicen los datos ingresados
                 (justo antes de que se genere el error)</label>
               <div class="mb-3">
@@ -310,7 +326,7 @@
                 />
               </div> -->
 
-              <label for="incidentTime" class="form-label">Hora del incidente (lo mas exacta posible)</label>
+              <label for="incidentTime" class="form-label">Hora del evento (lo mas exacta posible)</label>
               <div class="input-group mb-3">
                 <input
                   type="time"

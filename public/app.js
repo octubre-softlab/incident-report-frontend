@@ -82,9 +82,11 @@ form.addEventListener('submit', (event) => {
             dataType: "json",
             success: function(data){
                 alert("Incidente reportado. Muchas gracias");
+                $('#report').trigger('reset');
             },
-            error: function(errMsg) {
-                alert(errMsg);
+            error: function(err) {                
+                alert("El incidente no pudo ser reportado");
+                console.error(err);
             }
         });
 
@@ -107,14 +109,14 @@ $('input[name="incidentType"]').click(function () {
     if ($(this).attr('value') == 'degradation') {
         $(".degradation-fields").show('slow');
         $(".error-fields").hide('slow');
-        $(".degradation-fields textarea,input").attr('required', true);
-        $(".error-fields textarea,input").attr('required', false);
+        $(".degradation-fields textarea,.degradation-fields input").attr('required', true);
+        $(".error-fields textarea,.degradation-fields input").attr('required', false);
     }
     if ($(this).attr('value') == 'error') {
         $(".error-fields").show('slow');
         $(".degradation-fields").hide('slow');
-        $(".degradation-fields textarea,input").attr('required', false);
-        $(".error-fields textarea,input").attr('required', true);
+        $(".degradation-fields textarea,.degradation-fields input").attr('required', false);
+        $(".error-fields textarea,.degradation-fields input").attr('required', true);
 
     }
 });

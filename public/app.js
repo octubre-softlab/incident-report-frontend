@@ -7,6 +7,7 @@ const systems = [
     'miobra.osperyh.org.ar',
     'guau.umet.edu.ar',
     'miweb.umet.edu.ar',
+    'union.umet.edu.ar',
     'siga.octubre.org.ar',
     'rrhh.octubre.org.ar',
     'app.osperyhra.org.ar',

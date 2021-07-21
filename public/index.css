@@ -15,6 +15,10 @@ body {
     display: none;
   }
 
+  .note-label {
+    font-size: x-small
+  }
+
 
   .degradation-fields {
     display: none;

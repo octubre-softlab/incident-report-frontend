@@ -108,14 +108,15 @@ $('input[name="incidentType"]').click(function () {
     if ($(this).attr('value') == 'degradation') {
         $(".degradation-fields").show('slow');
         $(".error-fields").hide('slow');
+
         $(".degradation-fields textarea,.degradation-fields input").attr('required', true);
-        $(".error-fields textarea,.degradation-fields input").attr('required', false);
+        $(".error-fields textarea,.error-fields input").attr('required', false);
     }
     if ($(this).attr('value') == 'error') {
         $(".error-fields").show('slow');
         $(".degradation-fields").hide('slow');
         $(".degradation-fields textarea,.degradation-fields input").attr('required', false);
-        $(".error-fields textarea,.degradation-fields input").attr('required', true);
+        $(".error-fields textarea,.error-fields input").attr('required', true);
 
     }
 });

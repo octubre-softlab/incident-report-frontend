@@ -2,6 +2,7 @@ const systems = [
     'octubre.osperyh.org.ar', 
     'octubre.osperyhra.org.ar',
     'cajas2.octubre.osperyh.org.ar',
+    'octubre.mepadip.com.ar',
     'issa.edificarseguros.com.ar',
     'miseguro.edificarseguros.com.ar',
     'miobra.osperyh.org.ar',

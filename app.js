@@ -5,7 +5,6 @@ const systems = [
     'cajas2.octubre.osperyh.org.ar',
     'octubre.mepadip.com.ar',
     'issa.edificarseguros.com.ar',
-    'miseguro.edificarseguros.com.ar',
     'miobra.osperyh.org.ar',
     'guau.umet.edu.ar',
     'miweb.umet.edu.ar',
@@ -16,19 +15,19 @@ const systems = [
     'app.edificarseguros.com.ar',
     'intranet.seracarh.org.ar',
     'arrabal.sportivobarracas.com.ar',
-    'eltrineo.suterh.org.ar',
+    'eltrineo.osperyh.org.ar',
     'helios.osperyh.org.ar',
-    'wiki.octubre.org.ar',
     'gitlab.octubre.org.ar',
     'sentry.octubre.org.ar',
-    'example.com'
+    'example.com',
+    'octubre.fateryh.org.ar',
+    'cad.fateryh.org.ar',
+    'auth.octubre.org.ar'
 ];
 
     
 
 $(document).ready(function () {
-
-    
 
     systems.forEach((value, index) => {
         var systemId = `system_${value.replaceAll(".", "_")}`;
@@ -78,7 +77,7 @@ form.addEventListener('submit', (event) => {
         }
         $.ajax({
             type: "POST",
-            url: ${{ secrets.BACKEND_URL }},
+            url: process.env.BACKEND_URL,
             // The key needs to match your method's input parameter (case-sensitive).
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

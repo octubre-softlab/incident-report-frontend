@@ -78,7 +78,7 @@ form.addEventListener('submit', (event) => {
         }
         $.ajax({
             type: "POST",
-            url: "https://noisy-credit-2002.oct-softlab.workers.dev",
+            url: ${{ secrets.BACKEND_URL }},
             // The key needs to match your method's input parameter (case-sensitive).
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
@@ -133,17 +133,3 @@ $('input[name="clientFacing"]').click(function () {
 
     }
 });
-
-// Attach an event for when the user submits the form
-
-// $('form').on('submit', function (event) {
-
-//     // Prevent the page from reloading
-//     event.preventDefault();
-
-//     // var selectedSystems = $('#system-list input[id^=system_]:checked');
-    
-    
-// });
-
-

@@ -74,7 +74,7 @@ form.addEventListener('submit', (event) => {
         }
         $.ajax({
             type: "POST",
-            url: "process.env.CF_URL",
+            url: process.env.CF_URL,
             // The key needs to match your method's input parameter (case-sensitive).
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

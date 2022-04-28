@@ -3,29 +3,26 @@ const systems = [
     'octubre.osperyhra.org.ar',
     'octubre2.osperyhra.org.ar',
     'cajas2.octubre.osperyh.org.ar',
-    'octubre.mepadip.com.ar',
-    'issa.edificarseguros.com.ar',
     'miobra.osperyh.org.ar',
+    'issa.edificarseguros.com.ar',
     'guau.umet.edu.ar',
     'miweb.umet.edu.ar',
     'union.umet.edu.ar',
-    'siga.octubre.org.ar',
-    'rrhh.octubre.org.ar',
-    'app.osperyhra.org.ar',
     'app.edificarseguros.com.ar',
+    'siga.octubre.org.ar',
     'intranet.seracarh.org.ar',
     'arrabal.sportivobarracas.com.ar',
     'eltrineo.osperyh.org.ar',
+    'octubre.mepadip.com.ar',
+    'rrhh.octubre.org.ar',
+    'app.osperyhra.org.ar',
     'helios.osperyh.org.ar',
     'gitlab.octubre.org.ar',
     'sentry.octubre.org.ar',
-    'example.com',
     'octubre.fateryh.org.ar',
     'cad.fateryh.org.ar',
     'auth.octubre.org.ar'
-];
-
-    
+];    
 
 $(document).ready(function () {
 
@@ -77,7 +74,7 @@ form.addEventListener('submit', (event) => {
         }
         $.ajax({
             type: "POST",
-            url: "process.env.BACKEND_URL",
+            url: "process.env.CF_URL",
             // The key needs to match your method's input parameter (case-sensitive).
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

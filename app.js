@@ -80,8 +80,7 @@ form.addEventListener('submit', (event) => {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(data){
-                alert("Incidente reportado. Muchas gracias");
-                $('#report').trigger('reset');
+                location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
             },
             error: function(err) {                
                 alert("El incidente no pudo ser reportado");

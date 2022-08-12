@@ -21,12 +21,14 @@ const systems = [
     'sentry.octubre.org.ar',
     'octubre.fateryh.org.ar',
     'cad.fateryh.org.ar',
-    'auth.octubre.org.ar'
+    'auth.octubre.org.ar',
+    'pedidos.octubre.org.ar',
+    'socios.suterh.org.ar'
 ];    
 
 $(document).ready(function () {
 
-    systems.forEach((value, index) => {
+    systems.sort((a,b=>a - b)).forEach((value, index) => {
         var systemId = `system_${value.replaceAll(".", "_")}`;
 
         $("#system-list").append(`

@@ -28,7 +28,7 @@ const systems = [
 
 $(document).ready(function () {
 
-    systems.sort((a,b)=>a - b).forEach((value, index) => {
+    systems.sort().forEach((value, index) => {
         var systemId = `system_${value.replaceAll(".", "_")}`;
 
         $("#system-list").append(`

@@ -23,7 +23,8 @@ const systems = [
     'cad.fateryh.org.ar',
     'auth.octubre.org.ar',
     'pedidos.octubre.org.ar',
-    'socios.suterh.org.ar'
+    'socios.suterh.org.ar',
+    'acceso.suterh.org.ar'
 ];    
 
 $(document).ready(function () {

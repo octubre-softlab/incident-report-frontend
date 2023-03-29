@@ -24,7 +24,8 @@ const systems = [
     'auth.octubre.org.ar',
     'pedidos.octubre.org.ar',
     'socios.suterh.org.ar',
-    'acceso.suterh.org.ar'
+    'acceso.suterh.org.ar',
+    'planescolar.suterh.org.ar'
 ];    
 
 $(document).ready(function () {

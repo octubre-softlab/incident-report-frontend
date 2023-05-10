@@ -26,7 +26,23 @@ const systems = [
     'socios.suterh.org.ar',
     'acceso.suterh.org.ar',
     'planescolar.suterh.org.ar'
-];    
+];
+
+const delegaciones = [
+    'Central - Sarmiento 2040',
+    'Centro de la mujer y el Niño',
+    'Puerto Madero',
+    'La Maternidad',
+    'Clinica de la Ciudad',
+    'Belgrano - Clinica Octubre',
+    'Ramos Mejia',
+    'Lomas de Zamora',
+    'Quilmes',
+    'San Martin',
+    'San Isidro',
+    'San Miguel',
+    'Pilar'
+];
 
 $(document).ready(function () {
 
@@ -48,6 +64,52 @@ $(document).ready(function () {
             </div>
         `);
     });
+
+    delegaciones.forEach((value, index) => {
+        var delegacionId = `delegacion_${value.replaceAll(" ", "_").replaceAll("-", "_")}`;
+
+        $("#delegaciones-list").append(`
+            <div class="form-check form-checkbox">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="${delegacionId}"
+                name="${delegacionId}"
+                required
+            />
+            <label class="form-check-label" for="${delegacionId}">
+                ${value}
+            </label>
+            </div>
+        `);
+    });
+
+    $("#delegaciones-list").append(`
+        <div class="form-check form-checkbox">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="delegacion_other"
+            name="delegacion_other"
+            required
+        />
+        <label class="form-check-label" for="delegacion_other">
+            Otra
+        </label>
+        </div>
+    `);
+    
+
+    $('#delegacion_other').click(function(){
+        console.log(this)
+        if(this.checked){
+            $('#otherLocations').show();
+            $('#otherLocations').attr('required', true);
+        }else{
+            $('#otherLocations').hide();
+            $('#otherLocations').attr('required', false);
+        }
+    });
 });
 
 
@@ -66,32 +128,40 @@ form.addEventListener('submit', (event) => {
         var serialized = $('form').serializeArray();
         console.log("fields", serialized);
         var data = {
-            systems: []
+            systems: [],
+            affectedLocations: []
         };
         for(var i in serialized){
             if(serialized[i]['name'].startsWith('system_') && serialized[i]['value'] === 'on') {
                 data.systems.push(serialized[i]['name'].replace('system_','').replaceAll('_','.'));
             }
+            else if(serialized[i]['name'].startsWith('delegacion_') && serialized[i]['value'] === 'on') {
+                data.affectedLocations.push(serialized[i]['name'].replace('delegacion_','').replaceAll('_',' '));
+            }
+            else if(serialized[i]['name'] === 'otherLocations') {
+                data.affectedLocations.push(serialized[i]['value']);
+            }
             else {
                 data[serialized[i]['name']] = serialized[i]['value']
             }
         }
-        $.ajax({
-            type: "POST",
-            url: "https://incident-report-backend.oct-softlab.workers.dev/",
-            // The key needs to match your method's input parameter (case-sensitive).
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(data){
-                location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
-            },
-            error: function(err) {                
-                alert("El incidente no pudo ser reportado");
-                console.error(err);
-                form.classList.add('was-validated');
-            }
-        });
+        console.log(data)
+        // $.ajax({
+        //     type: "POST",
+        //     url: "https://incident-report-backend.oct-softlab.workers.dev/",
+        //     // The key needs to match your method's input parameter (case-sensitive).
+        //     data: JSON.stringify(data),
+        //     contentType: "application/json; charset=utf-8",
+        //     dataType: "json",
+        //     success: function(data){
+        //         location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
+        //     },
+        //     error: function(err) {                
+        //         alert("El incidente no pudo ser reportado");
+        //         console.error(err);
+        //         form.classList.add('was-validated');
+        //     }
+        // });
         
     }
 }, false);
@@ -100,6 +170,14 @@ $('#system-list').on('change', 'input[type="checkbox"]', function (e) {
     
     var $checkbox = $(this)
     var $group = $checkbox.parents('#system-list')
+    var checkedItems = $('input[type="checkbox"]:checked').length
+    $('input[type=checkbox]', $group).attr('required', checkedItems === 0)
+});
+
+$('#delegaciones-list').on('change', 'input[type="checkbox"]', function (e) {
+    
+    var $checkbox = $(this)
+    var $group = $checkbox.parents('#delegaciones-list')
     var checkedItems = $('input[type="checkbox"]:checked').length
     $('input[type=checkbox]', $group).attr('required', checkedItems === 0)
 });

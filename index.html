@@ -78,58 +78,14 @@
             <div class="card-header bg-primary"></div>
             <div class="card-body">
               <h5 class="card-title">
-                Control rápido de soluciones intentadas
+                Recordatorios antes de reportar un incidente
               </h5>
-
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheck1"
-                  required
-                />
-                <label class="form-check-label" for="flexCheck1">
-                  Borrar cache del navegador
-                </label>
-              </div>
-
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheck2"
-                  required
-                />
-                <label class="form-check-label" for="flexCheck2">
-                  Reintentar la acción
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheck3"
-                  required
-                />
-                <label class="form-check-label" for="flexCheck3">
-                  Salir y volver a entrar
-                </label>
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheck4"
-                  required
-                />
-                <label class="form-check-label" for="flexCheck4">
-                  Verificar si hay red disponible
-                </label>
-              </div>
+              <ul>
+                <li>Reintentar la acción</li>
+                <li>Verificar si hay red disponible</li>
+                <li>Salir y volver a entrar</li>
+                <li>Borrar cache del navegador</li>
+              </ul>
             </div>
           </div>
 
@@ -152,7 +108,7 @@
                   required
                 />
               </div>
-              <label class="form-check-label" for="affectsManyLocations">
+              <!-- <label class="form-check-label" for="affectsManyLocations">
                 ¿Sucede en mas de una delegación o edificio?
               </label>
               <div class="form-check">
@@ -166,27 +122,27 @@
                 <label class="form-check-label" for="affectsManyLocations2">
                   No
                 </label>
-              </div>
-              <br>
+              </div> 
+              <br>-->
               <label class="form-check-label" for="network">
-                ¿Los usuarios afectados usan una PC interna?
+                ¿Los usuarios afectados están en la red interna o en una red externa mediante internet?
               </label>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="network" id="network1" value="intranet" required>
                 <label class="form-check-label" for="network1">
-                  Si
+                  Red interna
                 </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="network" id="network2" value="internet" required>
                 <label class="form-check-label" for="network2">
-                  No
+                  Red externa (mediante internet)
                 </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="network" id="network3" value="any" required>
                 <label class="form-check-label" for="network3">
-                  Sucede tanto en PC interna como en externa
+                  Sucede tanto en red interna como en red externa
                 </label>
               </div>
               <br>
@@ -203,7 +159,7 @@
                 </label>
               </div>
               <br>
-              <label for="affectedUsers" class="form-label">Usuario/s afectados</label>
+              <!-- <label for="affectedUsers" class="form-label">Usuario/s afectados</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
@@ -214,15 +170,33 @@
                   aria-describedby="basic-addon3"
                   required
                 />
+              </div> -->
+              <label for="affectedLocations" class="form-label">Delegación/es (edificio/s) afectado/s:</label>
+              
+              <div id="delegaciones-list"  class="checkbox-group">
+
               </div>
-              <label for="affectedLocations" class="form-label">Sector/es y delegación/es (edificio/s) afectado/s</label>
               <div class="input-group mb-3">
                 <input
                   type="text"
                   placeholder="Tu respuesta"
                   class="form-control"
-                  id="affectedLocations"
-                  name="affectedLocations"
+                  id="otherLocations"
+                  name="otherLocations"
+                  aria-describedby="basic-addon3"
+                  style="display: none;"
+                />
+              </div>
+
+              
+              <label for="affectedUserGroups" class="form-label">¿En qué sectores trabajan los usuarios afectados? (Ej. Tesoreria, Afiliaciones, Seguridad)</label>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  placeholder="Tu respuesta"
+                  class="form-control"
+                  id="affectedUserGroups"
+                  name="affectedUserGroups"
                   aria-describedby="basic-addon3"
                   required
                 />

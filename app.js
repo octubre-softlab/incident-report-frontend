@@ -126,7 +126,7 @@ form.addEventListener('submit', (event) => {
     else {
         
         var serialized = $('form').serializeArray();
-        console.log("fields", serialized);
+        // console.log("fields", serialized);
         var data = {
             systems: [],
             affectedLocations: []
@@ -145,23 +145,23 @@ form.addEventListener('submit', (event) => {
                 data[serialized[i]['name']] = serialized[i]['value']
             }
         }
-        console.log(data)
-        // $.ajax({
-        //     type: "POST",
-        //     url: "https://incident-report-backend.oct-softlab.workers.dev/",
-        //     // The key needs to match your method's input parameter (case-sensitive).
-        //     data: JSON.stringify(data),
-        //     contentType: "application/json; charset=utf-8",
-        //     dataType: "json",
-        //     success: function(data){
-        //         location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
-        //     },
-        //     error: function(err) {                
-        //         alert("El incidente no pudo ser reportado");
-        //         console.error(err);
-        //         form.classList.add('was-validated');
-        //     }
-        // });
+        // console.log(data)
+        $.ajax({
+            type: "POST",
+            url: "https://incident-report-backend.oct-softlab.workers.dev/",
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
+            },
+            error: function(err) {                
+                alert("El incidente no pudo ser reportado");
+                console.error(err);
+                form.classList.add('was-validated');
+            }
+        });
         
     }
 }, false);

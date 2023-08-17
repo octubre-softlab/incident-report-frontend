@@ -118,7 +118,6 @@ var form = $('#report')[0];
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     event.stopPropagation();
-
     if (!form.checkValidity()) {
         alert('Debe completar todos los campos requeridos');
         form.classList.add('was-validated');
@@ -146,15 +145,17 @@ form.addEventListener('submit', (event) => {
             }
         }
         // console.log(data)
+        console.log(JSON.stringify(data))
+
         $.ajax({
             type: "POST",
-            url: "https://incident-report-backend.oct-softlab.workers.dev/",
+            url: "https://func-imhelper-iprd-ue.azurewebsites.net/api/SendIncidentReport",
             // The key needs to match your method's input parameter (case-sensitive).
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(data){
-                location.href = 'https://octubre-softlab.github.io/octubre-upptime/';
+                location.href = 'https://status.octubre.org.ar';
             },
             error: function(err) {                
                 alert("El incidente no pudo ser reportado");
@@ -165,6 +166,59 @@ form.addEventListener('submit', (event) => {
         
     }
 }, false);
+
+$('#hasUserProblemReport').on('click',function(){
+    if(this.checked){
+        $(".user-report").show('slow');
+        $(".user-report textarea,.user-report input").attr('required', true);
+        $(".incident-details").hide('slow');
+        $(".incident-details textarea,.incident-details input").attr('required', false);
+
+        // Limpio el div .incident-details #system-list
+        $('.incident-details #system-list input[type="checkbox"]').prop('checked', false);
+
+     }else{
+        $(".user-report").hide('slow');
+        $(".user-report textarea,.user-report input").attr('required', false);
+        $(".incident-details").show('slow');
+        $(".incident-details textarea,.incident-details input").attr('required', true);
+
+        // Limpio el div .user-report
+        $('.user-report input[type="text"]').val('');
+        $('.user-report input[type="number"]').val('');
+     }
+});
+
+$( "#searchUserProblemReport" ).on( "click", function() {
+    var id = $("#userProblemReportId").val();
+    $("#searchUserProblemReport").prop('disabled', true);
+    if(!!id) {
+        $.ajax({
+            type: "GET",
+            url: "https://func-imhelper-iprd-ue.azurewebsites.net/api/GetUserProblemReportSummary?userReportId=" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                console.log(data)
+                $("#userProblemReportTitle").val(data.title);
+                $("#userProblemReportIssueLink").val(data.url);
+                $("#userProblemReportSite").val(data.site);
+                $("#searchUserProblemReport").prop('disabled', false);
+            },
+            error: function(err) {
+                $("#searchUserProblemReport").prop('disabled', false);
+                if(!!err.status && err.status === 404)
+                {
+                    alert("No existe el reporte de usuario " + id)
+                }
+            }
+        });
+    }
+    else
+        alert("Debe completar el número de reporte de usuario")
+} );
+
+
 
 $('#system-list').on('change', 'input[type="checkbox"]', function (e) {
     

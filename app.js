@@ -64,6 +64,40 @@ const delegaciones = [
   "Pilar",
 ];
 
+function getReportJson(form) {
+  var serialized = $("form").serializeArray();
+  // console.log("fields", serialized);
+  var data = {
+    systems: [],
+    affectedLocations: [],
+  };
+  for (var i in serialized) {
+    if (
+      serialized[i]["name"].startsWith("system_") &&
+      serialized[i]["value"] === "on"
+    ) {
+      data.systems.push(
+        serialized[i]["name"].replace("system_", "").replaceAll("_", ".")
+      );
+    } else if (
+      serialized[i]["name"].startsWith("delegacion_") &&
+      serialized[i]["value"] === "on"
+    ) {
+      data.affectedLocations.push(
+        serialized[i]["name"].replace("delegacion_", "").replaceAll("_", " ")
+      );
+    } else if (serialized[i]["name"] === "otherLocations") {
+      data.affectedLocations.push(serialized[i]["value"]);
+    } else {
+      data[serialized[i]["name"]] = serialized[i]["value"];
+    }
+  }
+
+  var dataJson = JSON.stringify(data);
+
+  return dataJson;
+}
+
 $(document).ready(function () {
   systems.sort().forEach((value, index) => {
     var systemId = `system_${value.replaceAll(".", "_")}`;
@@ -137,56 +171,28 @@ var form = $("#report")[0];
 form.addEventListener(
   "submit",
   (event) => {
+    console.log("submit");
     event.preventDefault();
     event.stopPropagation();
     if (!form.checkValidity()) {
       alert("Debe completar todos los campos requeridos");
       form.classList.add("was-validated");
     } else {
-      var serialized = $("form").serializeArray();
-      // console.log("fields", serialized);
-      var data = {
-        systems: [],
-        affectedLocations: [],
-      };
-      for (var i in serialized) {
-        if (
-          serialized[i]["name"].startsWith("system_") &&
-          serialized[i]["value"] === "on"
-        ) {
-          data.systems.push(
-            serialized[i]["name"].replace("system_", "").replaceAll("_", ".")
-          );
-        } else if (
-          serialized[i]["name"].startsWith("delegacion_") &&
-          serialized[i]["value"] === "on"
-        ) {
-          data.affectedLocations.push(
-            serialized[i]["name"]
-              .replace("delegacion_", "")
-              .replaceAll("_", " ")
-          );
-        } else if (serialized[i]["name"] === "otherLocations") {
-          data.affectedLocations.push(serialized[i]["value"]);
-        } else {
-          data[serialized[i]["name"]] = serialized[i]["value"];
-        }
-      }
-      // console.log(data)
-      console.log(JSON.stringify(data));
+      var dataJson = getReportJson(form);
+      console.log(dataJson);
 
       $.ajax({
         type: "POST",
         url: "https://func-imhelper-iprd-ue.azurewebsites.net/api/SendIncidentReport",
         // The key needs to match your method's input parameter (case-sensitive).
-        data: JSON.stringify(data),
+        data: dataJson,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
           location.href = "https://status.octubre.org.ar";
         },
         error: function (err) {
-          alert("El incidente no pudo ser reportado");
+          alert("El incidente no pudo ser reportado. Descarge el reporte y envíelo por chat al canal de Incidentes");
           console.error(err);
           form.classList.add("was-validated");
         },
@@ -195,6 +201,39 @@ form.addEventListener(
   },
   false
 );
+
+$("#downloadReport").on("click", function () {
+  console.log("download");
+  if (!form.checkValidity()) {
+    alert("Debe completar todos los campos requeridos");
+    form.classList.add("was-validated");
+  } else {
+    const dataJson = getReportJson(form);
+
+    // Step 2: Convert the JSON string to base64
+    const base64String = btoa(dataJson);
+
+    // Create a Blob with the base64 content
+    const blob = new Blob([base64String], { type: "text/plain" });
+
+    // Create a link element
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    const currentDate = new Date();
+    const dateString = currentDate.toISOString().split('T')[0];
+    link.download = `reporte-incidente-${dateString}.txt`;
+
+    // Append the link to the body
+    $("body").append(link);
+
+    // Programmatically click the link to trigger the download
+    link.click();
+
+    // Remove the link from the document
+    $(link).remove();
+  }
+});
 
 $("#hasUserProblemReport").on("click", function () {
   if (this.checked) {

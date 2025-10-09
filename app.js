@@ -8,9 +8,13 @@ const systems = [
   "guau.umet.edu.ar",
   "miweb.umet.edu.ar",
   "union.umet.edu.ar",
+  "union.suterh.org.ar",
   "app.edificarseguros.com.ar",
+  "app.fateryh.org.ar",
   "siga.octubre.org.ar",
+  "sigaauth.octubre.org.ar",
   "intranet.seracarh.org.ar",
+  "informes.osperyh.org.ar",
   "eltrineo.osperyh.org.ar",
   "octubre.mepadip.com.ar",
   "rrhh.octubre.org.ar",
@@ -47,6 +51,10 @@ const systems = [
   "servicios.suterh.org.ar",
   "tableros.suterh.org.ar",
   "turnos.suterh.org.ar",
+  "gotenberg.intraservices.octubre.org.ar",
+  "beneficios.suterh.org.ar",
+  "arti.umet.edu.ar",
+  "pgadmin4.intranet.octubre.org.ar",
 ];
 
 const delegaciones = [

@@ -2,8 +2,9 @@ const systems = [
   "octubre.osperyh.org.ar",
   "octubre.osperyhra.org.ar",
   "octubre2.osperyhra.org.ar",
-  "cajas3octubre.osperyh.org.ar",
+  "cajasoctubre.osperyh.org.ar",
   "miobra.osperyh.org.ar",
+  "app.osperyh.org.ar",
   "issa.edificarseguros.com.ar",
   "guau.umet.edu.ar",
   "miweb.umet.edu.ar",
@@ -28,10 +29,6 @@ const systems = [
   "acceso.suterh.org.ar",
   "planescolar.suterh.org.ar",
   "acceso.umet.edu.ar",
-  "apache-hop.deux.net",
-  "app.osperyh.org.ar",
-  "cajasoctubre.osperyh.org.ar",
-  "carte.deux.net",
   "cc.fateryh.org.ar",
   "cloud.suterh.org.ar",
   "consulta.fateryh.org.ar",
@@ -43,9 +40,8 @@ const systems = [
   "miweb.suterh.org.ar",
   "octubre.suterh.org.ar",
   "octubre.virreyessalud.com.ar",
-  "webspoon.intranet.octubre.org",
+  "webspoon.intranet.octubre.org.ar",
   "airflow.octubre.org.ar",
-  "sentry.octubre.org.ar",
   "servicios.octubre.org.ar",
   "servicios.seracarh.org.ar",
   "servicios.suterh.org.ar",
@@ -198,7 +194,7 @@ form.addEventListener(
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-          location.href = "https://status.octubre.org.ar";
+          location.href = "https://status2.octubre.org.ar";
         },
         error: function (err) {
           alert("El incidente no pudo ser reportado. Descarge el reporte y envíelo por chat al canal de Incidentes");

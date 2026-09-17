@@ -16,29 +16,19 @@
   </head>
   <body>
     <div class="container">
-      <a
-        class="btn btn-success status-button"
-        href="https://status.octubre.org.ar/"
-        >Ver estado</a
-      >
-      <section id="logos" aria-label="Organizaciones participantes">
-        <div class="row">
-          <div class="col-6 col-md-3 offset-md-3">
-            <img src="./assets/Suterh.png" alt="Suterh" />
-          </div>
-          <div class="col-6 col-md-3">
-            <img src="./assets/Osperyh.png" alt="Osperyh" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 col-md-3 offset-md-3">
-            <img src="./assets/Osperyhra.png" alt="Osperyhra" />
-          </div>
-          <div class="col-6 col-md-3">
-            <img src="./assets/Fateryh.png" alt="Fateryh" />
-          </div>
-        </div>
-      </section>
+      <header class="site-header">
+        <section id="logos" aria-label="Organizaciones participantes">
+          <img src="./assets/Suterh.png" alt="Suterh" />
+          <img src="./assets/Osperyh.png" alt="Osperyh" />
+          <img src="./assets/Osperyhra.png" alt="Osperyhra" />
+          <img src="./assets/Fateryh.png" alt="Fateryh" />
+        </section>
+        <a
+          class="btn btn-success status-button"
+          href="https://status.octubre.org.ar/"
+          >Ver estado</a
+        >
+      </header>
 
       <form name="report" id="report" class="needs-validation" novalidate>
         <h1 class="card-title">☎ Reporte de incidente</h1>
@@ -424,21 +414,6 @@
               id="contactName"
               name="contactName"
               required
-            /><label for="contactPhone" class="form-label"
-              >Teléfono o interno</label
-            ><input
-              type="text"
-              class="form-control mb-3"
-              id="contactPhone"
-              name="contactPhone"
-              required
-            /><label for="contactRemoteSupportDetails" class="form-label"
-              >Datos opcionales para soporte remoto</label
-            ><input
-              type="text"
-              class="form-control"
-              id="contactRemoteSupportDetails"
-              name="contactRemoteSupportDetails"
             />
           </div>
         </section>

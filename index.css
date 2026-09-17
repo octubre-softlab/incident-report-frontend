@@ -40,12 +40,34 @@ li {
 }
 
 .status-button {
-  display: inline-block;
+  margin: 0 0 0 auto;
 }
 
 .container {
-  /* margin-top: 10px; */
   position: relative;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+#logos {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+#logos img {
+  display: block;
+  width: auto;
+  height: 36px;
+  max-width: min(20vw, 180px);
+  object-fit: contain;
 }
 
 #boton-flotante {
@@ -70,10 +92,6 @@ li {
   margin-top: 20px;
 }
 
-.card img {
-  margin-bottom: 20px;
-}
-
 .modal-header {
   flex-direction: column;
 }
@@ -88,25 +106,8 @@ li {
   right: 20px;
 }
 
-#logos .row div:nth-child(even) {
-  justify-content: flex-start;
-}
-#logos .row div:nth-child(odd) {
-  justify-content: flex-end;
-}
-
-.row div {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-around;
-}
-
 .send {
   padding: 15px 40px;
-}
-
-.row img {
-  max-width: 600px !important;
 }
 
 @media screen and (max-width: 996px) {
@@ -115,11 +116,31 @@ li {
     word-break: break-all;
   }
 
-  .row img {
-    width: 100% !important;
+  .site-header {
+    align-items: flex-start;
+  }
+
+  #logos img {
+    max-width: 18vw;
+    height: 32px;
   }
 
   .send {
     display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .site-header {
+    gap: 0.5rem;
+  }
+
+  #logos {
+    gap: 0.25rem;
+  }
+
+  #logos img {
+    width: 11vw;
+    height: 30px;
   }
 }

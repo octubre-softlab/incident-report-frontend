@@ -1,492 +1,458 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reporte de incidente</title>
-    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-    />
     <link rel="stylesheet" href="./index.css" />
   </head>
-
   <body>
     <div class="container">
-
-      <button class=" btn btn-success" id="boton-flotante">
-        <a href="https://status.octubre.org.ar/">Ver estado</a>
-      </button>
-
-      <section id="logos">
+      <a
+        class="btn btn-success status-button"
+        href="https://status.octubre.org.ar/"
+        >Ver estado</a
+      >
+      <section id="logos" aria-label="Organizaciones participantes">
         <div class="row">
           <div class="col-6 col-md-3 offset-md-3">
-            <img src="./assets/Suterh.png" alt="" />
+            <img src="./assets/Suterh.png" alt="Suterh" />
           </div>
           <div class="col-6 col-md-3">
-            <img src="./assets/Osperyh.png" alt="" />
+            <img src="./assets/Osperyh.png" alt="Osperyh" />
           </div>
         </div>
-
         <div class="row">
           <div class="col-6 col-md-3 offset-md-3">
-            <img src="./assets/Osperyhra.png" alt="" />
+            <img src="./assets/Osperyhra.png" alt="Osperyhra" />
           </div>
           <div class="col-6 col-md-3">
-            <img src="./assets/Fateryh.png" alt="" />
+            <img src="./assets/Fateryh.png" alt="Fateryh" />
           </div>
         </div>
       </section>
 
       <form name="report" id="report" class="needs-validation" novalidate>
-        <section>
-          <br>
-          <h1 class="card-title">☎ Reporte de incidente</h1>
-          <label class="form-check-label" >
-            (Recargar este sitio usando CTRL + F5 para ver la última versión)
-          </label>
+        <h1 class="card-title">☎ Reporte de incidente</h1>
+        <p>Recargá este sitio con CTRL + F5 para ver la última versión.</p>
+        <div
+          id="form-status"
+          class="alert"
+          role="status"
+          aria-live="polite"
+          tabindex="-1"
+          hidden
+        ></div>
 
-          
-
-          <div id="quick-check" class="card">
-            <div class="card-header bg-primary"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                Recordatorios antes de reportar un incidente
-              </h5>
-              <ul>
-                <li>Reintentar la acción</li>
-                <li>Verificar si hay red disponible</li>
-                <li>Salir y volver a entrar</li>
-                <li>Borrar cache del navegador</li>
-              </ul>
-            </div>
+        <section
+          id="quick-check"
+          class="card"
+          aria-labelledby="quick-check-title"
+        >
+          <div class="card-header bg-primary"></div>
+          <div class="card-body">
+            <h2 id="quick-check-title" class="h5 card-title">
+              Antes de reportar
+            </h2>
+            <ul>
+              <li>Reintentá la acción.</li>
+              <li>Salí y volvé a ingresar.</li>
+              <li>Actualizá la página o borrá la caché del navegador.</li>
+            </ul>
           </div>
-
-          <div class="card">
-            <div class="card-header bg-primary"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                Información básica
-              </h5>
-
-              <label class="form-check-label" for="reportedBy">
-                ¿Quién reporta?
-              </label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu nombre"
-                  class="form-control"
-                  id="reportedBy"
-                  name="reportedBy"
-                  aria-describedby="basic-addon3"
-                  required
-                />
-              </div>
-              <br>
-
-              <label for="affectedLocations" class="form-label">Delegación/es (edificio/s) afectado/s:</label>
-              
-              <div id="delegaciones-list"  class="checkbox-group">
-
-              </div>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="otherLocations"
-                  name="otherLocations"
-                  aria-describedby="basic-addon3"
-                  style="display: none;"
-                />
-              </div>
-
-              
-              <label for="affectedUserGroups" class="form-label">¿En qué sectores trabajan los usuarios afectados? (Ej. Tesoreria, Afiliaciones, Seguridad)</label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="affectedUserGroups"
-                  name="affectedUserGroups"
-                  aria-describedby="basic-addon3"
-                  required
-                />
-              </div>
-
-              <label class="form-check-label" for="clientFacing">
-                ¿Requiere de esta función para atender a un afiliado / cliente?
-              </label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="clientFacing" id="clientFacing1" value="yes" required>
-                <label class="form-check-label" for="clientFacing1">
-                  Si
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="clientFacing" id="clientFacing2" value="no" required>
-                <label class="form-check-label" for="clientFacing2">
-                  No
-                </label>
-              </div>
-              <div class="deadtime">
-                <br>
-                <label for="deadtime" class="form-label">¿Tiene un tiempo límite? En caso de tenerlo ¿cuándo debe entregarlo?</label>
-                <label class="form-label note-label">(NOTA: Si su sistema esta configurado para usar hora en formato AM/PM, deberá ingresar AM/PM)</label>
-                <div class="input-group mb-3">
-                  <input
-                    type="time"
-                    class="form-control"
-                    name="deadtime"
-                    id="deadtime"
-                    aria-describedby="basic-addon3"
-                  />
-                </div>
-              </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header bg-primary"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                Detalles<span
-                  class="text-danger"
-                >
-              </h5>
-
-              <div class="form-check form-checkbox">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="hasUserProblemReport"
-                    name="hasUserProblemReport"
-                />
-                <label class="form-check-label" for="hasUserProblemReport">
-                  Tengo número de reporte de usuario
-                </label>
-                </div>
-              <br>
-              <div class="user-report" style="display: none;">
-
-                <label class="form-check-label" for="userProblemReportId">
-                  Número de reporte de usuario
-                </label>
-                <div class="input-group mb-1">
-                  <input
-                    type="number"
-                    placeholder="Número"
-                    class="form-control"
-                    id="userProblemReportId"
-                    name="userProblemReportId"
-                    aria-describedby="basic-addon3"
-                  />
-                </div>
-                <button type="button" id="searchUserProblemReport" class="btn btn-primary">Buscar 🔎</button>
-                
-                <label class="form-check-label" for="userProblemReportTitle">
-                  Reporte encontrado
-                </label>
-
-                <div>
-                  <input
-                    type="text"
-                    placeholder=""
-                    class="form-control"
-                    id="userProblemReportIssueLink"
-                    name="userProblemReportIssueLink"
-                    aria-describedby="basic-addon3"
-                    readonly
-                  />
-                </div>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    placeholder=""
-                    class="form-control"
-                    id="userProblemReportTitle"
-                    name="userProblemReportTitle"
-                    aria-describedby="basic-addon3"
-                    required
-                    readonly
-                  />
-                </div>
-                <div style="display: none;">
-                  <input
-                    type="text"
-                    placeholder=""
-                    class="form-control"
-                    id="userProblemReportSite"
-                    name="userProblemReportSite"
-                    aria-describedby="basic-addon3"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="incident-details">
-                <label for="system-list" class="form-label">¿En qué sistema/s se presenta el problema?</label>
-                <div id="system-list"  class="checkbox-group">
-                </div>
-                <br>
-
-                <label class="form-check-label" for="affectedUsersCount">
-                  ¿Cuántos usuarios pudo verificar que tienen este problema?
-                </label>
-                <div class="input-group mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="affectedUsersCount"
-                    name="affectedUsersCount"
-                    aria-describedby="basic-addon3"
-                    required
-                  />
-                </div>
-                <label class="form-check-label" for="network">
-                  ¿Los usuarios afectados están en la red interna o en una red externa mediante internet?
-                </label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="network" id="network1" value="intranet" required>
-                  <label class="form-check-label" for="network1">
-                    Red interna
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="network" id="network2" value="internet" required>
-                  <label class="form-check-label" for="network2">
-                    Red externa (mediante internet)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="network" id="network3" value="any" required>
-                  <label class="form-check-label" for="network3">
-                    Sucede tanto en red interna como en red externa
-                  </label>
-                </div>
-                <br>
-
-                <label class="form-label">(Tome un evento como muestra del incidente)</label>
-                <br><br>
-
-                <label for="eventUser" class="form-label">Username con que ocurrió este evento</label>
-                <div class="input-group mb-3">
-                  <input
-                    placeholder="Tu respuesta"
-                    class="form-control"
-                    id="eventUser"
-                    name="eventUser"
-                    aria-describedby="basic-addon3"
-                    required
-                  />
-                </div>
-
-                <label for="functionName" class="form-label">Nombre de pantalla o función</label>
-                <div class="input-group mb-3">
-                  <input
-                    placeholder="Tu respuesta"
-                    class="form-control"
-                    id="functionName"
-                    name="functionName"
-                    aria-describedby="basic-addon3"
-                    required
-                  />
-                </div>
-
-                <label for="actionDetails" class="form-label">¿Qué acción intentaba hacer?</label>
-                <div class="input-group mb-3">
-                  <textarea
-                    type="text"
-                    placeholder="Tu respuesta"
-                    class="form-control"
-                    id="actionDetails"
-                    name="actionDetails"
-                    aria-describedby="basic-addon3"
-                    required
-                  ></textarea>
-                </div>
-
-                <label for="actionDetails" class="form-label">Por favor envie la captura por el chat</label>
-                <br><br>
-                <!-- <label for="files" class="form-label">Captura/s de pantalla completa donde se visualicen los datos ingresados
-                  (justo antes de que se genere el error)</label>
-                <div class="mb-3">
-                  <input
-                    class="form-control"
-                    type="file"
-                    id="files"
-                    name="files"
-                    multiple
-                    required
-                  />
-                </div> -->
-
-                <label for="incidentTime" class="form-label">Hora del evento (lo mas exacta posible)</label>
-                <label class="form-label note-label">(NOTA: Si su sistema esta configurado para usar hora en formato AM/PM, deberá ingresar AM/PM)</label>
-                <div class="input-group mb-3">
-                  <input
-                    type="time"
-                    class="form-control"
-                    id="incidentTime"
-                    name="incidentTime"
-                    aria-describedby="basic-addon3"
-                    required
-                  />
-                </div>
-
-                <label class="form-check-label" for="incidentType">
-                  Tipo de incidente
-                </label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="incidentType" id="incidentType1" value="degradation" required>
-                  <label class="form-check-label" for="incidentType1">
-                    Degradación (Lentitud)
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="incidentType" id="incidentType2" value="error" required>
-                  <label class="form-check-label" for="incidentType2">
-                    Error o compartamiento inesperado
-                  </label>
-                </div>
-                <br>
-                
-                <div class="error-fields">
-                  <label for="expectedBehavior" class="form-label">¿Cuál es el comportamiento esperado?</label>
-                  <div class="input-group mb-3">
-                    <textarea
-                      type="text"
-                      placeholder="Tu respuesta"
-                      class="form-control"
-                      id="expectedBehavior"
-                      name="expectedBehavior"
-                      aria-describedby="basic-addon3"
-                      required
-                    ></textarea>
-                  </div>
-
-                  <label for="errorDetails" class="form-label">Descripción del error que recibe: (Si la pantalla permite copiar
-                    el texto del error pegarlo aquí por favor)</label>
-                  <img width="100%" src="./assets/Animation.gif" alt="" />
-
-                  <div class="input-group mb-3">
-                    <textarea id="errorDetails" name="errorDetails" class="form-control" rows="3" placeholder="Tu respuesta" required></textarea>
-                  </div>
-
-                </div>
-                
-                <div class="degradation-fields">
-                  <label for="expectedTiming" class="form-label">¿Cuánto tiempo (en minutos y segundos) debería tardar normalmente esta acción?</label>
-                  <label class="form-label note-label">(NOTA: Si su sistema esta configurado para usar hora en formato AM/PM, deberá ingresar AM/PM)</label>
-                  <div class="input-group mb-3">
-                    <input
-                      type="time"
-                      class="form-control"
-                      id="expectedTiming"
-                      name="expectedTiming"
-                      aria-describedby="basic-addon3"
-                      required
-                    />
-                  </div>
-
-                  <label for="actualTiming" class="form-label">¿Cuánto tiempo (en minutos y segundos) esta tardando?</label>
-                  <label class="form-label note-label">(NOTA: Si su sistema esta configurado para usar hora en formato AM/PM, deberá ingresar AM/PM)</label>
-                  <div class="input-group mb-3">
-                    <input
-                      type="time"
-                      class="form-control"
-                      id="actualTiming"
-                      name="actualTiming"
-                      aria-describedby="basic-addon3"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="contact-details" class="card">
-            <div class="card-header bg-primary"></div>
-            <div class="card-body">
-              <h5 class="card-title">
-                ¿Con quién se puede probar?
-              </h5>
-              <label class="form-label">(Puede ser un miembro del equipo de soporte o usuario final)</label>
-              <br>              
-              <label for="contactName" class="form-label">Nombre</label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="contactName"
-                  name="contactName"
-                  aria-describedby="basic-addon3"
-                  required
-                />
-              </div>
-              <label for="contactPhone" class="form-label">Teléfono o interno</label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="contactPhone"
-                  name="contactPhone"
-                  aria-describedby="basic-addon3"
-                  required
-                />
-              </div>
-              <label for="contactRemoteSupportDetails" class="form-label">Team Viewer o Anydesk</label>
-              <div class="input-group mb-3">
-                <input
-                  type="text"
-                  placeholder="Tu respuesta"
-                  class="form-control"
-                  id="contactRemoteSupportDetails"
-                  name="contactRemoteSupportDetails"
-                  aria-describedby="basic-addon3"
-                />
-              </div>
-            </div>
-          </div>
-
-        <section>
-          <button type="submit" class="btn btn-primary send">Enviar</button>
         </section>
-      </form>
-      <section>
-        <button type="button" id="downloadReport" class="btn btn-secondary">Descargar reporte</button>
-      </section>
-      
-    </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-      crossorigin="anonymous"
-    ></script>
+        <section class="card" aria-labelledby="intake-title">
+          <div class="card-header bg-primary"></div>
+          <div class="card-body">
+            <h2 id="intake-title" class="h5 card-title">Inicio rápido</h2>
+            <label for="reportedBy" class="form-label">¿Quién reporta?</label
+            ><input
+              type="text"
+              placeholder="Tu nombre"
+              class="form-control mb-3"
+              id="reportedBy"
+              name="reportedBy"
+              required
+            />
+            <fieldset class="mb-3">
+              <legend class="form-label">
+                ¿En qué sistema o sistemas se presenta el problema?
+              </legend>
+              <details id="system-selector" class="system-selector">
+                <summary>Elegí uno o más sistemas</summary>
+                <div
+                  id="system-list"
+                  class="checkbox-group"
+                  aria-describedby="system-selection-summary system-selection-error"
+                ></div>
+              </details>
+              <p id="system-selection-summary" class="form-text mb-0">
+                No seleccionaste sistemas.
+              </p>
+              <div
+                id="system-selection-error"
+                class="invalid-feedback d-block"
+                hidden
+              >
+                Seleccioná al menos un sistema.
+              </div>
+            </fieldset>
+            <fieldset class="mb-3">
+              <legend class="form-label">
+                Delegación/es o edificio/s afectado/s
+              </legend>
+              <div
+                id="delegaciones-list"
+                class="checkbox-group"
+                aria-describedby="location-selection-error"
+              ></div>
+              <div
+                id="location-selection-error"
+                class="invalid-feedback d-block"
+                hidden
+              >
+                Seleccioná al menos una delegación o edificio.
+              </div>
+            </fieldset>
+            <label for="otherLocations" class="form-label visually-hidden"
+              >Otra delegación o edificio</label
+            ><input
+              type="text"
+              placeholder="Otra delegación o edificio"
+              class="form-control mb-3"
+              id="otherLocations"
+              name="otherLocations"
+              hidden
+            />
+            <label for="impactScope" class="form-label"
+              >¿Cuál es el alcance confirmado del impacto?</label
+            ><select
+              class="form-select mb-3"
+              id="impactScope"
+              name="impactScope"
+              required
+            >
+              <option value="" selected disabled>Seleccioná una opción</option>
+              <option value="all-users">Todos los usuarios</option>
+              <option value="sector">Un sector o área</option>
+              <option value="specific-users">Usuarios específicos</option>
+              <option value="unknown">No se pudo determinar</option>
+            </select>
+            <label for="affectedUserGroups" class="form-label"
+              >¿Qué sectores o personas están afectados?</label
+            ><input
+              type="text"
+              placeholder="Ej.: Tesorería, Afiliaciones"
+              class="form-control mb-3"
+              id="affectedUserGroups"
+              name="affectedUserGroups"
+            />
+            <fieldset>
+              <legend class="form-label">
+                ¿Impide atender a un afiliado o cliente?
+              </legend>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="clientFacing"
+                  id="clientFacing1"
+                  value="yes"
+                  required
+                /><label class="form-check-label" for="clientFacing1">Sí</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="clientFacing"
+                  id="clientFacing2"
+                  value="no"
+                  required
+                /><label class="form-check-label" for="clientFacing2">No</label>
+              </div>
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="details-title">
+          <div class="card-header bg-primary"></div>
+          <div class="card-body">
+            <h2 id="details-title" class="h5 card-title">Qué observaste</h2>
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="hasUserProblemReport"
+                name="hasUserProblemReport"
+              /><label class="form-check-label" for="hasUserProblemReport"
+                >Tengo número de reporte de usuario</label
+              >
+            </div>
+            <div class="user-report" hidden>
+              <label for="userProblemReportId" class="form-label"
+                >Número de reporte de usuario</label
+              ><input
+                type="number"
+                placeholder="Número"
+                class="form-control mb-2"
+                id="userProblemReportId"
+                name="userProblemReportId"
+              /><button
+                type="button"
+                id="searchUserProblemReport"
+                class="btn btn-primary"
+              >
+                Buscar</button
+              ><label for="userProblemReportIssueLink" class="form-label"
+                >Reporte encontrado</label
+              ><input
+                type="text"
+                class="form-control mb-2"
+                id="userProblemReportIssueLink"
+                name="userProblemReportIssueLink"
+                readonly
+              /><input
+                type="text"
+                class="form-control mb-3"
+                id="userProblemReportTitle"
+                name="userProblemReportTitle"
+                readonly
+              /><input
+                type="text"
+                id="userProblemReportSite"
+                name="userProblemReportSite"
+                readonly
+                hidden
+              />
+            </div>
+            <div class="incident-details">
+              <label for="affectedUsersCount" class="form-label"
+                >¿A cuántas personas pudiste verificar que afecta?</label
+              ><input
+                type="number"
+                min="1"
+                class="form-control mb-3"
+                id="affectedUsersCount"
+                name="affectedUsersCount"
+                required
+              />
+              <fieldset class="mb-3">
+                <legend class="form-label">
+                  ¿Los usuarios afectados están en la red interna o en una red
+                  externa mediante internet?
+                </legend>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="network"
+                    id="network1"
+                    value="intranet"
+                    required
+                  />
+                  <label class="form-check-label" for="network1"
+                    >Red interna</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="network"
+                    id="network2"
+                    value="internet"
+                    required
+                  />
+                  <label class="form-check-label" for="network2"
+                    >Red externa (mediante internet)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="network"
+                    id="network3"
+                    value="any"
+                    required
+                  />
+                  <label class="form-check-label" for="network3"
+                    >Sucede tanto en red interna como en red externa</label
+                  >
+                </div>
+              </fieldset>
+              <label for="eventUser" class="form-label"
+                >Usuario afectado de ejemplo</label
+              ><input
+                class="form-control mb-3"
+                id="eventUser"
+                name="eventUser"
+                placeholder="Tu respuesta"
+                required
+              />
+              <label for="functionName" class="form-label"
+                >¿En qué pantalla o función ocurrió?</label
+              ><input
+                class="form-control mb-3"
+                id="functionName"
+                name="functionName"
+                placeholder="Tu respuesta"
+                required
+              />
+              <label for="actionDetails" class="form-label"
+                >¿Qué pasos seguiste y qué ocurrió?</label
+              ><textarea
+                class="form-control mb-3"
+                id="actionDetails"
+                name="actionDetails"
+                placeholder="Indicá los pasos y el resultado observable"
+                required
+              ></textarea>
+              <label for="incidentTime" class="form-label"
+                >¿Cuándo comenzó? (hora aproximada)</label
+              ><input
+                type="time"
+                class="form-control mb-3"
+                id="incidentTime"
+                name="incidentTime"
+                required
+              />
+              <fieldset>
+                <legend class="form-label">
+                  ¿Qué tipo de problema observaste?
+                </legend>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="incidentType"
+                    id="incidentType1"
+                    value="degradation"
+                    required
+                  /><label class="form-check-label" for="incidentType1"
+                    >Degradación o lentitud</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="incidentType"
+                    id="incidentType2"
+                    value="error"
+                    required
+                  /><label class="form-check-label" for="incidentType2"
+                    >Error o comportamiento inesperado</label
+                  >
+                </div>
+              </fieldset>
+              <div class="error-fields" hidden>
+                <label for="expectedBehavior" class="form-label"
+                  >¿Qué esperabas que ocurriera?</label
+                ><textarea
+                  class="form-control mb-3"
+                  id="expectedBehavior"
+                  name="expectedBehavior"
+                ></textarea
+                ><label for="errorDetails" class="form-label"
+                  >Texto del error que aparece en pantalla</label
+                >
+                <p class="form-text">
+                  Si podés copiarlo, pegalo completo aquí.
+                </p>
+                <textarea
+                  id="errorDetails"
+                  name="errorDetails"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="degradation-fields" hidden>
+                <label for="expectedTiming" class="form-label"
+                  >¿Cuánto tarda normalmente esta acción?</label
+                ><input
+                  type="text"
+                  class="form-control mb-3"
+                  id="expectedTiming"
+                  name="expectedTiming"
+                  placeholder="Ej.: 10 segundos"
+                /><label for="actualTiming" class="form-label"
+                  >¿Cuánto está tardando ahora?</label
+                ><input
+                  type="text"
+                  class="form-control mb-3"
+                  id="actualTiming"
+                  name="actualTiming"
+                  placeholder="Ej.: 2 minutos"
+                /><label for="degradationFacts" class="form-label"
+                  >Pasos realizados y hechos observables</label
+                ><textarea
+                  id="degradationFacts"
+                  name="degradationFacts"
+                  class="form-control"
+                  placeholder="Ej.: reintenté tres veces; la pantalla quedó cargando"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="contact-details"
+          class="card"
+          aria-labelledby="contact-title"
+        >
+          <div class="card-header bg-primary"></div>
+          <div class="card-body">
+            <h2 id="contact-title" class="h5 card-title">
+              ¿Con quién se puede probar?
+            </h2>
+            <label for="contactName" class="form-label">Nombre</label
+            ><input
+              type="text"
+              class="form-control mb-3"
+              id="contactName"
+              name="contactName"
+              required
+            /><label for="contactPhone" class="form-label"
+              >Teléfono o interno</label
+            ><input
+              type="text"
+              class="form-control mb-3"
+              id="contactPhone"
+              name="contactPhone"
+              required
+            /><label for="contactRemoteSupportDetails" class="form-label"
+              >Datos opcionales para soporte remoto</label
+            ><input
+              type="text"
+              class="form-control"
+              id="contactRemoteSupportDetails"
+              name="contactRemoteSupportDetails"
+            />
+          </div>
+        </section>
+        <button type="submit" class="btn btn-primary send">Enviar</button>
+      </form>
+      <button type="button" id="downloadReport" class="btn btn-secondary">
+        Descargar reporte
+      </button>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-
     <script src="app.js"></script>
   </body>
 </html>

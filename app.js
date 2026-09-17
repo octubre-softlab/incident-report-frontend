@@ -68,277 +68,281 @@ const delegaciones = [
   "San Miguel",
   "Pilar",
 ];
+const form = document.getElementById("report");
 
-function getReportJson(form) {
-  var serialized = $("form").serializeArray();
-  // console.log("fields", serialized);
-  var data = {
-    systems: [],
-    affectedLocations: [],
+function getRegistrableDomain(hostname) {
+  const labels = hostname.split(".");
+  return labels.slice(-3).join(".");
+}
+function systemId(hostname) {
+  return `system_${hostname.replaceAll(".", "_")}`;
+}
+function showStatus(message, type) {
+  const status = document.getElementById("form-status");
+  status.textContent = message;
+  status.className = `alert alert-${type}`;
+  status.hidden = false;
+  status.focus();
+}
+function selectedValues(selector) {
+  return Array.from(document.querySelectorAll(selector))
+    .filter((input) => input.checked)
+    .map((input) => input.value);
+}
+function updateGroupValidity(containerId, errorId, summaryId) {
+  const selected = selectedValues(`#${containerId} input[type="checkbox"]`);
+  const valid = selected.length > 0;
+  document.getElementById(errorId).hidden =
+    valid || !form.classList.contains("was-validated");
+  if (summaryId)
+    document.getElementById(summaryId).textContent = valid
+      ? `${selected.length} sistema${selected.length === 1 ? "" : "s"} seleccionado${selected.length === 1 ? "" : "s"}: ${selected.join(", ")}.`
+      : "No seleccionaste sistemas.";
+  return valid;
+}
+function validateGroups() {
+  return (
+    updateGroupValidity(
+      "system-list",
+      "system-selection-error",
+      "system-selection-summary",
+    ) && updateGroupValidity("delegaciones-list", "location-selection-error")
+  );
+}
+function getReportJson() {
+  const data = {
+    systems: selectedValues('#system-list input[type="checkbox"]'),
+    affectedLocations: selectedValues(
+      '#delegaciones-list input[type="checkbox"]',
+    ),
   };
-  for (var i in serialized) {
+  new FormData(form).forEach((value, name) => {
     if (
-      serialized[i]["name"].startsWith("system_") &&
-      serialized[i]["value"] === "on"
-    ) {
-      data.systems.push(
-        serialized[i]["name"].replace("system_", "").replaceAll("_", ".")
-      );
-    } else if (
-      serialized[i]["name"].startsWith("delegacion_") &&
-      serialized[i]["value"] === "on"
-    ) {
-      data.affectedLocations.push(
-        serialized[i]["name"].replace("delegacion_", "").replaceAll("_", " ")
-      );
-    } else if (serialized[i]["name"] === "otherLocations") {
-      data.affectedLocations.push(serialized[i]["value"]);
-    } else {
-      data[serialized[i]["name"]] = serialized[i]["value"];
-    }
-  }
-
-  var dataJson = JSON.stringify(data);
-
-  return dataJson;
+      !name.startsWith("system_") &&
+      !name.startsWith("delegacion_") &&
+      name !== "otherLocations"
+    )
+      data[name] = value;
+  });
+  const otherLocation = document.getElementById("otherLocations");
+  if (otherLocation.value.trim())
+    data.affectedLocations.push(otherLocation.value.trim());
+  return JSON.stringify(data);
+}
+function addCheckbox(container, id, value, label) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "form-check form-checkbox";
+  const input = document.createElement("input");
+  input.className = "form-check-input";
+  input.type = "checkbox";
+  input.id = id;
+  input.name = id;
+  input.value = value;
+  const inputLabel = document.createElement("label");
+  inputLabel.className = "form-check-label";
+  inputLabel.htmlFor = id;
+  inputLabel.textContent = label;
+  wrapper.append(input, inputLabel);
+  container.append(wrapper);
+}
+function renderSystems() {
+  const list = document.getElementById("system-list");
+  const groups = new Map();
+  systems
+    .slice()
+    .sort((a, b) => a.localeCompare(b))
+    .forEach((hostname) => {
+      const domain = getRegistrableDomain(hostname);
+      if (!groups.has(domain)) groups.set(domain, []);
+      groups.get(domain).push(hostname);
+    });
+  Array.from(groups.keys())
+    .sort((a, b) => a.localeCompare(b))
+    .forEach((domain) => {
+      const group = document.createElement("fieldset");
+      group.className = "system-domain-group";
+      const legend = document.createElement("legend");
+      legend.textContent = domain;
+      group.append(legend);
+      groups
+        .get(domain)
+        .forEach((hostname) =>
+          addCheckbox(group, systemId(hostname), hostname, hostname),
+        );
+      list.append(group);
+    });
+}
+function renderLocations() {
+  const list = document.getElementById("delegaciones-list");
+  delegaciones.forEach((location) =>
+    addCheckbox(
+      list,
+      `delegacion_${location.replaceAll(" ", "_").replaceAll("-", "_")}`,
+      location,
+      location,
+    ),
+  );
+  addCheckbox(list, "delegacion_other", "other", "Otra");
+}
+function setConditionalFields(container, required) {
+  document
+    .querySelectorAll(`${container} input, ${container} textarea`)
+    .forEach((field) => {
+      field.required = required;
+    });
+}
+function updateImpactScopeRequirement() {
+  document.getElementById("affectedUserGroups").required =
+    document.getElementById("impactScope").value === "sector";
+}
+function displayRoutingResult(data) {
+  if (!data || typeof data !== "object") return false;
+  const classification =
+    typeof data.classification === "string" ? data.classification : "";
+  const routing = typeof data.routing === "string" ? data.routing : "";
+  if (!classification && !routing) return false;
+  showStatus([classification, routing].filter(Boolean).join(" — "), "info");
+  return true;
+}
+function downloadReport() {
+  const blob = new Blob([btoa(unescape(encodeURIComponent(getReportJson())))], {
+    type: "text/plain",
+  });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `reporte-incidente-${new Date().toISOString().split("T")[0]}.txt`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
 }
 
-$(document).ready(function () {
-  systems.sort().forEach((value, index) => {
-    var systemId = `system_${value.replaceAll(".", "_")}`;
-
-    $("#system-list").append(`
-            <div class="form-check form-checkbox">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                id="${systemId}"
-                name="${systemId}"
-                required
-            />
-            <label class="form-check-label" for="${systemId}">
-                ${value}
-            </label>
-            </div>
-        `);
-  });
-
-  delegaciones.forEach((value, index) => {
-    var delegacionId = `delegacion_${value
-      .replaceAll(" ", "_")
-      .replaceAll("-", "_")}`;
-
-    $("#delegaciones-list").append(`
-            <div class="form-check form-checkbox">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                id="${delegacionId}"
-                name="${delegacionId}"
-                required
-            />
-            <label class="form-check-label" for="${delegacionId}">
-                ${value}
-            </label>
-            </div>
-        `);
-  });
-
-  $("#delegaciones-list").append(`
-        <div class="form-check form-checkbox">
-        <input
-            class="form-check-input"
-            type="checkbox"
-            id="delegacion_other"
-            name="delegacion_other"
-            required
-        />
-        <label class="form-check-label" for="delegacion_other">
-            Otra
-        </label>
-        </div>
-    `);
-
-  $("#delegacion_other").click(function () {
-    console.log(this);
-    if (this.checked) {
-      $("#otherLocations").show();
-      $("#otherLocations").attr("required", true);
-    } else {
-      $("#otherLocations").hide();
-      $("#otherLocations").attr("required", false);
+renderSystems();
+renderLocations();
+updateImpactScopeRequirement();
+document
+  .getElementById("impactScope")
+  .addEventListener("change", updateImpactScopeRequirement);
+document
+  .getElementById("system-list")
+  .addEventListener("change", () =>
+    updateGroupValidity(
+      "system-list",
+      "system-selection-error",
+      "system-selection-summary",
+    ),
+  );
+document
+  .getElementById("delegaciones-list")
+  .addEventListener("change", (event) => {
+    const isOther = event.target.id === "delegacion_other";
+    if (isOther) {
+      const other = document.getElementById("otherLocations");
+      other.hidden = !event.target.checked;
+      other.required = event.target.checked;
+      if (!event.target.checked) other.value = "";
     }
+    updateGroupValidity("delegaciones-list", "location-selection-error");
   });
-});
-
-var form = $("#report")[0];
-
-form.addEventListener(
-  "submit",
-  (event) => {
-    console.log("submit");
-    event.preventDefault();
-    event.stopPropagation();
-    if (!form.checkValidity()) {
-      alert("Debe completar todos los campos requeridos");
-      form.classList.add("was-validated");
-    } else {
-      var dataJson = getReportJson(form);
-      console.log(dataJson);
-
-      $.ajax({
-        type: "POST",
-        url: "https://func-imhelper-iprd-ue.azurewebsites.net/api/SendIncidentReport",
-        // The key needs to match your method's input parameter (case-sensitive).
-        data: dataJson,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-          location.href = "https://status2.octubre.org.ar";
-        },
-        error: function (err) {
-          alert("El incidente no pudo ser reportado. Descarge el reporte y envíelo por chat al canal de Incidentes");
-          console.error(err);
-          form.classList.add("was-validated");
-        },
-      });
-    }
-  },
-  false
+document
+  .getElementById("hasUserProblemReport")
+  .addEventListener("change", (event) => {
+    const lookup = document.querySelector(".user-report");
+    const details = document.querySelector(".incident-details");
+    lookup.hidden = !event.target.checked;
+    details.hidden = event.target.checked;
+    setConditionalFields(".user-report", event.target.checked);
+    setConditionalFields(".incident-details", !event.target.checked);
+    updateGroupValidity(
+      "system-list",
+      "system-selection-error",
+      "system-selection-summary",
+    );
+  });
+document
+  .getElementById("hasUserProblemReport")
+  .dispatchEvent(new Event("change"));
+document.querySelectorAll('input[name="incidentType"]').forEach((input) =>
+  input.addEventListener("change", () => {
+    const degradation = input.value === "degradation";
+    document.querySelector(".degradation-fields").hidden = !degradation;
+    document.querySelector(".error-fields").hidden = degradation;
+    setConditionalFields(".degradation-fields", degradation);
+    setConditionalFields(".error-fields", !degradation);
+  }),
 );
-
-$("#downloadReport").on("click", function () {
-  console.log("download");
-  if (!form.checkValidity()) {
-    alert("Debe completar todos los campos requeridos");
-    form.classList.add("was-validated");
-  } else {
-    const dataJson = getReportJson(form);
-
-    // Step 2: Convert the JSON string to base64
-    const base64String = btoa(dataJson);
-
-    // Create a Blob with the base64 content
-    const blob = new Blob([base64String], { type: "text/plain" });
-
-    // Create a link element
-    const link = document.createElement("a");
-
-    link.href = URL.createObjectURL(blob);
-    const currentDate = new Date();
-    const dateString = currentDate.toISOString().split('T')[0];
-    link.download = `reporte-incidente-${dateString}.txt`;
-
-    // Append the link to the body
-    $("body").append(link);
-
-    // Programmatically click the link to trigger the download
-    link.click();
-
-    // Remove the link from the document
-    $(link).remove();
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  form.classList.add("was-validated");
+  if (!form.checkValidity() || !validateGroups()) {
+    showStatus(
+      "Revisá los campos requeridos antes de enviar el reporte.",
+      "danger",
+    );
+    return;
   }
+  $.ajax({
+    type: "POST",
+    url: "https://func-imhelper-iprd-ue.azurewebsites.net/api/SendIncidentReport",
+    data: getReportJson(),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success(data) {
+      if (!displayRoutingResult(data))
+        location.href = "https://status2.octubre.org.ar";
+    },
+    error() {
+      showStatus(
+        "El envío no se completó. Descargá el reporte y envialo por chat al canal de Incidentes.",
+        "danger",
+      );
+      document.getElementById("downloadReport").focus();
+    },
+  });
 });
-
-$("#hasUserProblemReport").on("click", function () {
-  if (this.checked) {
-    $(".user-report").show("slow");
-    $(".user-report textarea,.user-report input").attr("required", true);
-    $(".incident-details").hide("slow");
-    $(".incident-details textarea,.incident-details input").attr(
-      "required",
-      false
+document.getElementById("downloadReport").addEventListener("click", () => {
+  form.classList.add("was-validated");
+  if (!form.checkValidity() || !validateGroups()) {
+    showStatus(
+      "Completá los campos requeridos antes de descargar el reporte.",
+      "danger",
     );
-
-    // Limpio el div .incident-details #system-list
-    $('.incident-details #system-list input[type="checkbox"]').prop(
-      "checked",
-      false
-    );
-  } else {
-    $(".user-report").hide("slow");
-    $(".user-report textarea,.user-report input").attr("required", false);
-    $(".incident-details").show("slow");
-    $(".incident-details textarea,.incident-details input").attr(
-      "required",
-      true
-    );
-
-    // Limpio el div .user-report
-    $('.user-report input[type="text"]').val("");
-    $('.user-report input[type="number"]').val("");
+    return;
   }
+  downloadReport();
 });
-
-$("#searchUserProblemReport").on("click", function () {
-  var id = $("#userProblemReportId").val();
-  $("#searchUserProblemReport").prop("disabled", true);
-  if (!!id) {
+document
+  .getElementById("searchUserProblemReport")
+  .addEventListener("click", () => {
+    const id = document.getElementById("userProblemReportId").value;
+    const button = document.getElementById("searchUserProblemReport");
+    if (!id) {
+      showStatus("Completá el número de reporte de usuario.", "danger");
+      return;
+    }
+    button.disabled = true;
     $.ajax({
       type: "GET",
-      url:
-        "https://func-imhelper-iprd-ue.azurewebsites.net/api/GetUserProblemReportSummary?userReportId=" +
-        id,
+      url: `https://func-imhelper-iprd-ue.azurewebsites.net/api/GetUserProblemReportSummary?userReportId=${encodeURIComponent(id)}`,
       contentType: "application/json; charset=utf-8",
       dataType: "json",
-      success: function (data) {
-        console.log(data);
-        $("#userProblemReportTitle").val(data.title);
-        $("#userProblemReportIssueLink").val(data.url);
-        $("#userProblemReportSite").val(data.site);
-        $("#searchUserProblemReport").prop("disabled", false);
+      success(data) {
+        document.getElementById("userProblemReportTitle").value =
+          data.title || "";
+        document.getElementById("userProblemReportIssueLink").value =
+          data.url || "";
+        document.getElementById("userProblemReportSite").value =
+          data.site || "";
+        button.disabled = false;
       },
-      error: function (err) {
-        $("#searchUserProblemReport").prop("disabled", false);
-        if (!!err.status && err.status === 404) {
-          alert("No existe el reporte de usuario " + id);
-        }
+      error(xhr) {
+        button.disabled = false;
+        showStatus(
+          xhr.status === 404
+            ? `No existe el reporte de usuario ${id}.`
+            : "No se pudo consultar el reporte de usuario.",
+          "danger",
+        );
       },
     });
-  } else alert("Debe completar el número de reporte de usuario");
-});
-
-$("#system-list").on("change", 'input[type="checkbox"]', function (e) {
-  var $checkbox = $(this);
-  var $group = $checkbox.parents("#system-list");
-  var checkedItems = $('input[type="checkbox"]:checked').length;
-  $("input[type=checkbox]", $group).attr("required", checkedItems === 0);
-});
-
-$("#delegaciones-list").on("change", 'input[type="checkbox"]', function (e) {
-  var $checkbox = $(this);
-  var $group = $checkbox.parents("#delegaciones-list");
-  var checkedItems = $('input[type="checkbox"]:checked').length;
-  $("input[type=checkbox]", $group).attr("required", checkedItems === 0);
-});
-
-$('input[name="incidentType"]').click(function () {
-  if ($(this).attr("value") == "degradation") {
-    $(".degradation-fields").show("slow");
-    $(".error-fields").hide("slow");
-
-    $(".degradation-fields textarea,.degradation-fields input").attr(
-      "required",
-      true
-    );
-    $(".error-fields textarea,.error-fields input").attr("required", false);
-  }
-  if ($(this).attr("value") == "error") {
-    $(".error-fields").show("slow");
-    $(".degradation-fields").hide("slow");
-    $(".degradation-fields textarea,.degradation-fields input").attr(
-      "required",
-      false
-    );
-    $(".error-fields textarea,.error-fields input").attr("required", true);
-  }
-});
-
-$('input[name="clientFacing"]').click(function () {
-  if ($(this).attr("value") == "yes") {
-    $(".deadtime").hide("slow");
-  }
-  if ($(this).attr("value") == "no") {
-    $(".deadtime").show("slow");
-  }
-});
+  });
